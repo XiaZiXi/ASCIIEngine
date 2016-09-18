@@ -2,43 +2,58 @@
 // game.cpp
 // 
 
-#include <Windows.h>
+#define VERSION 1.0
+
 // Engine includes.
-#include "LogManager.h"
 #include "GameManager.h"
-#include "WorldManager.h"
-#include "utility.h"
-#include "ObjectListIterator.h"
-#include "Object.h"
+#include "LogManager.h"
+ 
+// Game includes.
 #include "Hero.h"
 #include "Star.h"
-#include "GraphicsManager.h"
-#include "InputManager.h"
-#include "JoystickFriend.h"
+#include "Saucer.h"
+
+// Function prototypes.
 void populateWorld(void);
-
+ 
 int main(int argc, char *argv[]) {
-	df::LogManager &log_manager = df::LogManager::getInstance();
-	//Start up game manager.
-	df::GameManager &game_manager = df::GameManager::getInstance();
-	if (game_manager.startUp()) {
-		log_manager.writeLog("Error starting game manager!");
-		game_manager.shutDown();
-		return 0;
-	}
+  df::LogManager &log_manager = df::LogManager::getInstance();
 
-	// Set flush of logfile during development (when done, make false).
-	log_manager.setFlush(true);
-	populateWorld();
+  // Start up game manager.
+  df::GameManager &game_manager = df::GameManager::getInstance();
+  if (game_manager.startUp())  {
+    log_manager.writeLog("Error starting game manager!");
+    game_manager.shutDown();
+    return 0;
+  }
 
-	game_manager.run(); //start the game
-	game_manager.shutDown();
+  // Write game version information to logfile.
+  log_manager.writeLog("Saucer Shoot Naiad, version %0.1f", VERSION);
 
-	return 0;
+  // Set flush of logfile during development (when done, make false).
+  log_manager.setFlush(true);
+
+  // Setup some objects.
+  populateWorld();
+ 
+  // Run game (this blocks until game loop is over).
+  game_manager.run();
+ 
+  // Shut everything down.
+  game_manager.shutDown();
 }
-
+ 
+// Populate world with some objects.
 void populateWorld(void) {
-	for (int i = 0; i < 16; i++)
-		new Star;
-	new Hero;
+
+  // Spawn some Stars.
+  //for (int i=0; i<16; i++) 
+  //  new Star;
+ 
+  // Create hero.
+  new Hero;
+
+  // Spawn some saucers to shoot.
+  for (int i=0; i<16; i++)
+    new Saucer;
 }

@@ -12,7 +12,7 @@ namespace df {
 
 		ObjectList *updates;		//All objects in world to update
 		ObjectList *deletions;	//All objects in world to delete
-		ObjectList *altitudes[MAX_ALTITUDE];
+		ObjectList *altitudes[MAX_ALTITUDE+1];
 
 		Box boundary;
 	public:

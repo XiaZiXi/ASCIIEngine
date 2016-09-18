@@ -36,7 +36,7 @@ void sleep(long int ms) {
 }
 
 bool positionsIntersect(df::Vector p1, df::Vector p2) {
-	if (p1.getX() == p2.getX() && p1.getY() == p2.getY())
+	if (abs(p1.getX() - p2.getX()) < 1 && abs(p1.getY() - p2.getY()) < 1)
 		return true;
 	else
 		return false;

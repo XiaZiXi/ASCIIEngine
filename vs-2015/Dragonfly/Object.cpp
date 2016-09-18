@@ -50,9 +50,6 @@ df::Vector df::Object::getPosition() const
 
 void df::Object::setAltitude(int new_alt)
 {
-	new_alt--;
-	if (new_alt < 0)
-		new_alt = 0;
 	int old_alt = altitude;
 	altitude = new_alt;
 	//Tell world manager that we have changed altitudes

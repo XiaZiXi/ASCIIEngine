@@ -10,6 +10,7 @@ df::EventCollision::EventCollision()
 
 df::EventCollision::EventCollision(Object * p_o1, Object * p_o2, Vector p)
 {
+	setType(COLLISION_EVENT);
 	p_obj1 = p_o1;
 	p_obj2 = p_o2;
 	pos = p;

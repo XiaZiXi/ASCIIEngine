@@ -13,24 +13,26 @@ namespace df {
 		DOWN = 3
 	};
 
-	enum EventMouseButton {
-		UNDEFINED_MOUSE_BUTTON = -1,
-		LEFT,
-		RIGHT,
-		MIDDLE,
-	};
+	namespace Mouse {
+		enum EventMouseButton {
+			UNDEFINED_MOUSE_BUTTON = -1,
+			LEFT,
+			RIGHT,
+			MIDDLE,
+		};
+	}
 
 	class EventMouse : public Event {
 	private:
 		EventMouseAction mouse_action;					//mouse action
-		EventMouseButton mouse_button;					//mouse button
+		Mouse::EventMouseButton mouse_button;					//mouse button
 		Vector mouse_xy;								//mouse (x,y) coords
 	public:
 		EventMouse();
 		//Set key in event
-		void setMouseButton(EventMouseButton new_button);
+		void setMouseButton(Mouse::EventMouseButton new_button);
 		//Get key from event
-		EventMouseButton getMouseButton() const;
+		Mouse::EventMouseButton getMouseButton() const;
 		//Set keyboard event action
 		void setMouseAction(EventMouseAction new_action);
 		//Get keyboard event action

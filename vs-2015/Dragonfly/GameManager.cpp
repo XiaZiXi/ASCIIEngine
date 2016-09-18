@@ -62,7 +62,7 @@ void df::GameManager::run()
 	GraphicsManager &graphics_manager = GraphicsManager::getInstance();
 	InputManager &input_manager = InputManager::getInstance();
 	int game_loop_count = 0;
-	long int loop_time, intended_sleep_time, adjust_time = 0, actual_sleep_time;
+	long int loop_time, intended_sleep_time, adjust_time = 0;
 	Clock clock;
 	ObjectList world_objects;
 	while (!game_over) {
@@ -82,8 +82,8 @@ void df::GameManager::run()
 		clock.delta();
 		if (intended_sleep_time > 0)
 			sleep(intended_sleep_time);
-		actual_sleep_time = clock.split();
-		adjust_time = actual_sleep_time - intended_sleep_time;
+		/*actual_sleep_time = clock.split();
+		adjust_time = actual_sleep_time - intended_sleep_time;*/
 		game_loop_count++;
 	}
 }

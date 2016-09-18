@@ -76,7 +76,7 @@ int df::GraphicsManager::drawCh(Vector world_pos, char ch, Color color) const
 	rectangle.setFillColor(window_background_color);
 	rectangle.setPosition(pixel_pos.getX() - charWidth() / 10,
 		pixel_pos.getY() + charHeight() / 5);
-	//p_window->draw(rectangle);
+	p_window->draw(rectangle);
 
 	sf::Text text("", font);
 	text.setString(ch);
@@ -209,7 +209,7 @@ int df::GraphicsManager::swapBuffers()
 	if (p_window == NULL)
 		return -1;
 	p_window->display();
-	p_window->clear(window_background_color);
+	p_window->clear();
 	return 0;
 }
 
@@ -241,6 +241,6 @@ df::Vector spacesToPixels(df::Vector spaces) {
 
 //Convert window pixels (x,y) to ASCII spaces (x,y)
 df::Vector pixelsToSpaces(df::Vector pixels) {
-	return df::Vector(charWidth() / pixels.getX(),
-		charHeight() / pixels.getY());
+	return df::Vector(pixels.getX() / charWidth(),
+		pixels.getY() / charHeight());
 }

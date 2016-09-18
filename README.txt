@@ -1,14 +1,16 @@
-Dragonfly Egg
+Dragonfly Naiad
 Kelly Zhang (kezhang)
 
 Engine Code & Game Code written and tested in Visual Studio 2015. 
 NOT YET TESTED ON LINUX. make WITH CAUTION.
 
-TestGame contains a few tests in LibraryTest.cpp. Could have added more but was
-short on time. Currently it has a few functions attempting tests on LogManager and
-one on testing the Clock class. Running TestGame.exe will make 100 heroes and by using
-step events, it will change its position every 1 second until after 5 seconds, when
-game over is called.
+Engine contains the basic functionality expected in this iteration, along with basic Joystick support.
+
+TestGame contains the Dragonfly Naiad version of Saucer Shoot.
+
+KNOWN BUGS:
+Bullets sometimes do not go the full length and are destroyed early.
+Graphical rendering hiccups. (Saucers "teleport")
 
 --------------------------------------------------------------------
 

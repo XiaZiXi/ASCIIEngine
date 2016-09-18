@@ -10,7 +10,7 @@ df::WorldManager::WorldManager(){
 	setType("WorldManager");
 	updates = new ObjectList();
 	deletions = new ObjectList();
-	for (int i = 0; i < MAX_ALTITUDE; i++) {
+	for (int i = 0; i < MAX_ALTITUDE+1; i++) {
 		altitudes[i] = new ObjectList();
 	}
 	GraphicsManager &gm = GraphicsManager::getInstance();
@@ -53,6 +53,7 @@ int df::WorldManager::removeObject(Object * p_o)
 	ObjectListIterator li(&ol);
 	for (li.first(); !li.isDone(); li.next()) {
 		if (li.currentObject() == p_o) {
+			updates->remove(p_o);
 			markForDelete(p_o);
 			return 0;
 		}
@@ -72,10 +73,8 @@ int df::WorldManager::moveObject(Object *p_o, Vector new_pos)
 			while (!li.isDone()) {
 				Object *p_temp_o = li.currentObject();
 				EventCollision c(p_o, p_temp_o, new_pos);
-
 				p_o->eventHandler(&c);
 				p_temp_o->eventHandler(&c);
-
 				if (p_o->getSolidness() == Solidness::HARD && p_temp_o->getSolidness() == Solidness::HARD) {
 					do_move = false; //can't move
 				}
@@ -89,10 +88,11 @@ int df::WorldManager::moveObject(Object *p_o, Vector new_pos)
 	} //object not solid 
 	GraphicsManager &graphics_manager = GraphicsManager::getInstance();
 	p_o->setPosition(new_pos);
+	//send out event if new position is out of bounds
 	if (new_pos.getX() > graphics_manager.getHorizontal() || new_pos.getX() < 0 ||
 		new_pos.getY() > graphics_manager.getVertical() || new_pos.getY() < 0) {
 		EventOut e;
-		onEvent(&e);
+		p_o->eventHandler(&e);
 	}
 	return 0;
 }
@@ -174,7 +174,7 @@ void df::WorldManager::update()
 void df::WorldManager::draw()
 {
 	//Iterates thru each layer of objects and draws them
-	for (int i = 0; i < MAX_ALTITUDE; i++) {
+	for (int i = 0; i < MAX_ALTITUDE+1; i++) {
 		ObjectList p_ol = *(altitudes[i]);
 		ObjectListIterator oli(&p_ol);
 		for (oli.first(); !oli.isDone(); oli.next()) {
@@ -195,6 +195,5 @@ int df::WorldManager::markForDelete(Object * p_o)
 			return 0;
 		li.next();
 	}
-	updates->remove(p_o);
 	return deletions->insert(p_o);
 }

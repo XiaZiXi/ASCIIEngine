@@ -78,8 +78,14 @@ void df::InputManager::getInput()
 		else if (event.type == sf::Event::MouseButtonPressed) {
 			EventMouse e = EventMouse();
 			e.setMouseAction(EventMouseAction::PRESSED);
+			e.setMouseButton((df::Mouse::EventMouseButton)event.mouseButton.button);
 			e.setMousePosition(df::Vector((float)event.mouseMove.x, (float)event.mouseMove.y));
 			world_manager.onEvent(&e);
+			EventMouse ev = EventMouse();
+			ev.setMouseAction(EventMouseAction::CLICKED);
+			ev.setMouseButton((df::Mouse::EventMouseButton)event.mouseButton.button);
+			ev.setMousePosition(df::Vector((float)event.mouseMove.x, (float)event.mouseMove.y));
+			world_manager.onEvent(&ev);
 		}
 		if (joystickMode) {
 			if (event.type == sf::Event::JoystickConnected) {
@@ -138,7 +144,7 @@ void df::InputManager::getInput()
 	//Check current key presses for each individual key
 	//checkKeyPress();
 	//Check current mouse press events for each position
-	checkMousePress();
+	//checkMousePress();
 	if (joystickMode) {
 		checkJoysickAxis();
 		checkJoystickButton();
@@ -179,8 +185,13 @@ void checkMousePress() {
 			sf::Vector2i pos = sf::Mouse::getPosition(*(window));
 			df::EventMouse e = df::EventMouse();
 			e.setMouseAction(df::EventMouseAction::PRESSED);
-			e.setMouseButton((df::EventMouseButton)mb);
+			e.setMouseButton((df::Mouse::EventMouseButton)mb);
 			e.setMousePosition(df::Vector((float)pos.x, (float)pos.y));
+			world_manager.onEvent(&e);
+			df::EventMouse ev = df::EventMouse();
+			ev.setMouseAction(df::EventMouseAction::CLICKED);
+			ev.setMouseButton((df::Mouse::EventMouseButton)mb);
+			ev.setMousePosition(df::Vector((float)pos.x, (float)pos.y));
 			world_manager.onEvent(&e);
 			break;
 		}

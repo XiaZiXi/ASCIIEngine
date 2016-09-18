@@ -43,9 +43,8 @@ int Star::eventHandler(const df::Event *p_e) {
 
 // If Star moved off screen, move back to far right.
 void Star::out() {
-	if (getPosition().getX() > 0) {
-		return;
-	}
+  if (getPosition().getX() >= 0)
+	return;
   df::GraphicsManager &graphics_manager = df::GraphicsManager::getInstance();
   df::Vector pos((float) (graphics_manager.getHorizontal() + rand()%20),
 		 (float) (rand() % graphics_manager.getVertical()));

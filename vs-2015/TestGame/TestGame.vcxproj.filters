@@ -15,16 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Hero.cpp">
+    <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LibraryTests.cpp">
+    <ClCompile Include="EventNuke.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="JoystickFriend.cpp">
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Reticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Saucer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Star.cpp">
@@ -32,17 +44,32 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventNuke.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Hero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LibraryTests.h">
+    <ClInclude Include="Reticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JoystickFriend.h">
+    <ClInclude Include="Saucer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Star.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="df-config.txt" />
   </ItemGroup>
 </Project>

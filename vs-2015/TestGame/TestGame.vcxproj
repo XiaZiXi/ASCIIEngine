@@ -130,22 +130,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="JoystickFriend.cpp" />
-    <ClCompile Include="LibraryTests.cpp" />
-    <ClCompile Include="Star.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Hero.h" />
-    <ClInclude Include="JoystickFriend.h" />
-    <ClInclude Include="LibraryTests.h" />
-    <ClInclude Include="Star.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Dragonfly\Dragonfly.vcxproj">
       <Project>{2933ffd1-9244-4d04-894d-ef64cb61ad4b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="EventNuke.cpp" />
+    <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="Reticle.cpp" />
+    <ClCompile Include="Saucer.cpp" />
+    <ClCompile Include="Star.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="EventNuke.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="GameOver.h" />
+    <ClInclude Include="Hero.h" />
+    <ClInclude Include="Reticle.h" />
+    <ClInclude Include="Saucer.h" />
+    <ClInclude Include="Star.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="df-config.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
