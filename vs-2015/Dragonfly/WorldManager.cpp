@@ -53,7 +53,6 @@ int df::WorldManager::removeObject(Object * p_o)
 	ObjectListIterator li(&ol);
 	for (li.first(); !li.isDone(); li.next()) {
 		if (li.currentObject() == p_o) {
-			updates->remove(p_o);
 			markForDelete(p_o);
 			return 0;
 		}
@@ -162,7 +161,6 @@ void df::WorldManager::update()
 	li.first();
 	while (!li.isDone()) {
 		if (li.currentObject() != NULL) {
-			altitudes[li.currentObject()->getAltitude()]->remove(li.currentObject());
 			delete li.currentObject();
 		}
 		li.next();
@@ -195,5 +193,10 @@ int df::WorldManager::markForDelete(Object * p_o)
 			return 0;
 		li.next();
 	}
+	//don't update this object anymore
+	updates->remove(p_o);
+	//don't draw this object anymore
+	altitudes[p_o->getAltitude()]->remove(p_o);
+	//add to deletion list
 	return deletions->insert(p_o);
 }
