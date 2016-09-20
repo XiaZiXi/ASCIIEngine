@@ -20,8 +20,7 @@ int df::ObjectList::remove(Object * p_o)
 {
 	for (int i = 0; i < count; i++) {
 		if (p_object[i] == p_o) { //if we found it
-			for (int j = i; j < count - 1; j++) //then shift all objects over
-				p_object[j] = p_object[j + 1];
+			p_object[i] = p_object[count - 1];
 			count--;
 			return 0;
 		}

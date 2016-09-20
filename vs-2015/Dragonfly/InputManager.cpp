@@ -2,6 +2,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Joystick.hpp>
+#include "LogManager.h"
 #include "WorldManager.h"
 #include "GraphicsManager.h"
 #include "InputManager.h"
@@ -48,6 +49,7 @@ void df::InputManager::getInput()
 {
 	GraphicsManager &graphics_manager = GraphicsManager::getInstance();
 	WorldManager &world_manager = WorldManager::getInstance();
+	LogManager &log_manager = LogManager::getInstance();
 	sf::RenderWindow *window = graphics_manager.getWindow();
 	sf::Event event;
 	while (window->pollEvent(event)) {
@@ -70,21 +72,23 @@ void df::InputManager::getInput()
 			world_manager.onEvent(&ev);
 		}
 		else if (event.type == sf::Event::MouseMoved) {
+			sf::Vector2i pos = sf::Mouse::getPosition(*(window));
 			EventMouse e = EventMouse();
 			e.setMouseAction(EventMouseAction::MOVED);
-			e.setMousePosition(df::Vector((float)event.mouseMove.x, (float)event.mouseMove.y));
+			e.setMousePosition(df::Vector((float)pos.x, (float)pos.y));
 			world_manager.onEvent(&e);
 		}
 		else if (event.type == sf::Event::MouseButtonPressed) {
+			sf::Vector2i pos = sf::Mouse::getPosition(*(window));
 			EventMouse e = EventMouse();
 			e.setMouseAction(EventMouseAction::PRESSED);
 			e.setMouseButton((df::Mouse::EventMouseButton)event.mouseButton.button);
-			e.setMousePosition(df::Vector((float)event.mouseMove.x, (float)event.mouseMove.y));
+			e.setMousePosition(df::Vector((float)pos.x, (float)pos.y));
 			world_manager.onEvent(&e);
 			EventMouse ev = EventMouse();
 			ev.setMouseAction(EventMouseAction::CLICKED);
 			ev.setMouseButton((df::Mouse::EventMouseButton)event.mouseButton.button);
-			ev.setMousePosition(df::Vector((float)event.mouseMove.x, (float)event.mouseMove.y));
+			ev.setMousePosition(df::Vector((float)pos.x, (float)pos.y));
 			world_manager.onEvent(&ev);
 		}
 		if (joystickMode) {

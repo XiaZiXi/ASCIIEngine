@@ -78,7 +78,7 @@ int df::GraphicsManager::drawCh(Vector world_pos, char ch, Color color) const
 		pixel_pos.getY() + charHeight() / 5);
 	p_window->draw(rectangle);
 
-	sf::Text text("", font);
+	static sf::Text text("", font);
 	text.setString(ch);
 	text.setStyle(sf::Text::Bold);
 

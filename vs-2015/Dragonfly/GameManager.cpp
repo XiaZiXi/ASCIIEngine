@@ -12,7 +12,10 @@
 
 #include "EventStep.h"
 
-df::GameManager::GameManager() {}
+df::GameManager::GameManager() {
+	setType("GameManager");
+	frame_time = FRAME_TIME_DEFAULT;
+}
 df::GameManager &df::GameManager::getInstance()
 {
 	static GameManager instance;
@@ -20,9 +23,7 @@ df::GameManager &df::GameManager::getInstance()
 }
 
 int df::GameManager::startUp()
-{
-	frame_time = FRAME_TIME_DEFAULT;
-	setType("GameManager");
+{	
 	LogManager &log_manager = LogManager::getInstance();
 	log_manager.startUp();
 	WorldManager &world_manager = WorldManager::getInstance();
@@ -62,7 +63,7 @@ void df::GameManager::run()
 	GraphicsManager &graphics_manager = GraphicsManager::getInstance();
 	InputManager &input_manager = InputManager::getInstance();
 	int game_loop_count = 0;
-	long int loop_time, intended_sleep_time, adjust_time = 0;
+	long int loop_time, intended_sleep_time, adjust_time = 0, actual_sleep_time;
 	Clock clock;
 	ObjectList world_objects;
 	while (!game_over) {
@@ -82,8 +83,8 @@ void df::GameManager::run()
 		clock.delta();
 		if (intended_sleep_time > 0)
 			sleep(intended_sleep_time);
-		/*actual_sleep_time = clock.split();
-		adjust_time = actual_sleep_time - intended_sleep_time;*/
+		actual_sleep_time = clock.split();
+		adjust_time = actual_sleep_time - intended_sleep_time;
 		game_loop_count++;
 	}
 }

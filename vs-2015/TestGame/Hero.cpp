@@ -146,16 +146,16 @@ void Hero::move(int dy) {
 void Hero::fire(df::Vector target) {
 
   // See if time to fire.
-  /*if (fire_countdown > 0)
+  if (fire_countdown > 0)
     return;
-  fire_countdown = fire_slowdown;*/
+  fire_countdown = fire_slowdown;
 
   // Fire Bullet towards target.
   Bullet *p = new Bullet(getPosition());
   df::Vector v = df::Vector(p->getVelocity().getX(),
 	  ((float)(target.getY() - getPosition().getY())) /
 	  ((float)(target.getX() - getPosition().getX())));
-  p->setVelocity(v);
+   p->setVelocity(v);
 }
 
 // Decrease fire restriction.
