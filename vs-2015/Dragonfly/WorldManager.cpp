@@ -93,7 +93,7 @@ int df::WorldManager::moveObject(Object *p_o, Vector new_pos)
 
 df::ObjectList df::WorldManager::isCollision(const Object * p_o, Vector where)
 {
-	ObjectList collision_list = ObjectList();
+	ObjectList collision_list;
 	ObjectListIterator li(&updates);
 	while (!li.isDone()) {
 		Object * p_temp_o = li.currentObject();

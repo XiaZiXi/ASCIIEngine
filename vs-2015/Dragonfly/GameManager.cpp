@@ -6,6 +6,7 @@
 #include "WorldManager.h"
 #include "GraphicsManager.h"
 #include "InputManager.h"
+#include "ResourceManager.h"
 #include "ObjectListIterator.h"
 #include "Clock.h"
 #include "utility.h"
@@ -32,6 +33,8 @@ int df::GameManager::startUp()
 	graphics_manager.startUp();
 	InputManager &input_manager = InputManager::getInstance();
 	input_manager.startUp();
+	ResourceManager &resource_manager = ResourceManager::getInstance();
+	resource_manager.startUp();
 	game_over = false;
 #if defined(_WIN32) || defined(_WIN64)
 	timeBeginPeriod(1);
@@ -46,6 +49,7 @@ void df::GameManager::shutDown()
 #if defined(_WIN32) || defined(_WIN64)
 	timeEndPeriod(1);
 #endif
+	ResourceManager::getInstance().shutDown();
 	InputManager::getInstance().shutDown();
 	//Remove all objects
 	WorldManager::getInstance().shutDown();

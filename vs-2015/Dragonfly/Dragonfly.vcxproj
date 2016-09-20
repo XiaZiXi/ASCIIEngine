@@ -29,6 +29,7 @@
     <ClInclude Include="EventMouse.h" />
     <ClInclude Include="EventOut.h" />
     <ClInclude Include="EventStep.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="InputManager.h" />
@@ -40,6 +41,8 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectList.h" />
     <ClInclude Include="ObjectListIterator.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="WorldManager.h" />
@@ -55,6 +58,7 @@
     <ClCompile Include="EventMouse.cpp" />
     <ClCompile Include="EventOut.cpp" />
     <ClCompile Include="EventStep.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -66,6 +70,8 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectList.cpp" />
     <ClCompile Include="ObjectListIterator.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="WorldManager.cpp" />

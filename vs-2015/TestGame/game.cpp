@@ -7,6 +7,7 @@
 // Engine includes.
 #include "GameManager.h"
 #include "LogManager.h"
+#include "ResourceManager.h"
  
 // Game includes.
 #include "Hero.h"
@@ -15,6 +16,8 @@
 
 // Function prototypes.
 void populateWorld(void);
+
+void loadResources(void);
  
 int main(int argc, char *argv[]) {
   df::LogManager &log_manager = df::LogManager::getInstance();
@@ -33,6 +36,8 @@ int main(int argc, char *argv[]) {
   // Set flush of logfile during development (when done, make false).
   log_manager.setFlush(true);
 
+  loadResources();
+
   // Setup some objects.
   populateWorld();
  
@@ -41,6 +46,11 @@ int main(int argc, char *argv[]) {
  
   // Shut everything down.
   game_manager.shutDown();
+}
+
+void loadResources(void) {
+	df::ResourceManager &resource_manager = df::ResourceManager::getInstance();
+	resource_manager.loadSprite("sprites/ship-spr.txt", "Hero");
 }
  
 // Populate world with some objects.

@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 namespace df {
 	enum Color {
 		UNDEFINED_COLOR = -1,
@@ -12,7 +13,7 @@ namespace df {
 		WHITE = 7,
 	};
 	const Color COLOR_DEFAULT = WHITE;
-	/*class Color {
+	class CustomColor {
 		const int COLOR_DEFAULT = WHITE;
 		const int UNDEFINED_COLOR = -1;
 		const int BLACK = 0;
@@ -24,10 +25,10 @@ namespace df {
 		const int CYAN = 6;
 		const int WHITE = 7;
 	private:
-		Color();
+		CustomColor();
 		sf::Color sf_color;
 	public:
-		Color(int _r, int _g, int _b);
-		Color(int _r, int _g, int _b, int _a);
-	}; */
+		CustomColor(int _r, int _g, int _b);
+		CustomColor(int _r, int _g, int _b, int _a);
+	}; 
 }
