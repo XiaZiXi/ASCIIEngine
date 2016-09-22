@@ -118,6 +118,83 @@ df::Sprite * df::ResourceManager::getSprite(std::string label) const
 	return NULL;
 }
 
+int df::ResourceManager::loadSound(std::string filename, std::string label)
+{
+	LogManager &lm = LogManager::getInstance();
+	if (sound_count == MAX_SOUNDS) {
+		lm.writeLog("ResourceManager::loadSound(): Sound array full");
+		return -1;
+	}
+
+	if (sound[sound_count].loadSound(filename) == -1) {
+		lm.writeLog("ResourceManager::loadSound(): Unable to load %s from file.", filename.c_str());
+		return -1;
+	}
+
+	sound[sound_count++].setLabel(label);
+	return 0;
+}
+
+int df::ResourceManager::unloadSound(std::string label)
+{
+	for (int i = 0; i < sound_count; i++) {
+		if (label == sound[i].getLabel()) {
+			sound[i] = sound[sound_count - 1];
+			sound_count--;
+			return 0;
+		}
+	}
+	return -1;
+}
+
+df::Sound * df::ResourceManager::getSound(std::string label)
+{
+	for (int i = 0; i < sound_count; i++) {
+		if (label == sound[i].getLabel()) {
+			return (&sound[i]);
+		}
+	}
+	return NULL;
+}
+
+int df::ResourceManager::loadMusic(std::string filename, std::string label)
+{
+	LogManager &lm = LogManager::getInstance();
+	if (music_count == MAX_MUSICS) {
+		lm.writeLog("ResourceManager::loadSound(): Sound array full");
+		return -1;
+	}
+
+	if (music[music_count].loadMusic(filename) == -1) {
+		lm.writeLog("ResourceManager::loadSound(): Unable to load %s from file.", filename.c_str());
+		return -1;
+	}
+
+	music[music_count++].setLabel(label);
+	return 0;
+}
+
+int df::ResourceManager::unloadMusic(std::string label)
+{
+	for (int i = 0; i < music_count; i++) {
+		if (label == music[i].getLabel()) {
+			music->setLabel("");
+			return 0;
+		}
+	}
+	return -1;
+}
+
+df::Music * df::ResourceManager::getMusic(std::string label)
+{
+	for (int i = 0; i < music_count; i++) {
+		if (label == music[i].getLabel()) {
+			return (&music[i]);
+		}
+	}
+	return NULL;
+}
+
 int df::ResourceManager::readLineInt(ifstream *p_file, int *p_line_num, const char *tag) {
 	LogManager &lm = LogManager::getInstance();
 	string line;

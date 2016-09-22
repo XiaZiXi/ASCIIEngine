@@ -14,7 +14,10 @@ namespace df {
 		ObjectList deletions;	//All objects in world to delete
 		ObjectList altitudes[MAX_ALTITUDE+1];
 
-		Box boundary;
+		Box boundary;			//World boundary
+		Box view;				//Player view of game world
+		Vector view_slack;			//View slack before view moves
+		Object *p_view_following; //Object view is following
 	public:
 		static WorldManager &getInstance();
 		//Startup game world. Init everything to empty.
@@ -40,6 +43,16 @@ namespace df {
 		//Get/set boundary of world
 		void setBoundary(Box new_boundary);
 		Box getBoundary() const;
+		//Set/get player view of game world
+		void setView(Box new_view);
+		Box getView() const;
+		//Set view to center window on position view_pos
+		//View edge will not go beyond world boundary
+		void setViewPosition(Vector new_view_pos);
+		//Set view to center window on Object
+		//Set to NULL to stop following
+		//If p_new_view_following not legit, return -1, else 0
+		int setViewFollowing(Object *p_new_view_following);
 		//Updates world
 		//Deletes objects marked for deletion
 		void update();

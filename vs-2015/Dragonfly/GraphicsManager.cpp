@@ -69,7 +69,7 @@ int df::GraphicsManager::drawCh(Vector world_pos, char ch, Color color) const
 		lm.writeLog("GraphicsManager::drawCh(): p_window is NULL!");
 		return -1;
 	}
-
+	Vector view_pos = worldToView(world_pos);
 	Vector pixel_pos = spacesToPixels(world_pos);
 	static sf::RectangleShape rectangle;
 	rectangle.setSize(sf::Vector2f(charWidth(), charHeight()));
@@ -144,6 +144,34 @@ int df::GraphicsManager::drawString(Vector world_pos, std::string str, Justifica
 		drawCh(temp_pos, str[i], color);
 	}
 
+	return 0;
+}
+
+int df::GraphicsManager::drawFrame(Vector world_pos, Frame frame, bool centered, Color color, char transparent) const
+{
+	if (frame.getString() == "")
+		return -1;
+
+	int x_offset = 0;
+	int y_offset = 0;
+	if (centered) {
+		x_offset = frame.getWidth() / 2;
+		y_offset = frame.getHeight() / 2;
+	}
+
+	//Frame data stored in string
+	std::string str = frame.getString();
+
+	//Draw row by row, character by character
+	for (int y = 0; y < frame.getHeight(); y++) {
+		for (int x = 0; x < frame.getWidth(); x++) {
+			if (transparent == NULL || (str[y*frame.getWidth() + x] != transparent)) {
+				Vector temp_pos(world_pos.getX() - x_offset + x,
+					world_pos.getY() - y_offset + y);
+				drawCh(temp_pos, str[y*frame.getWidth() + x], color);
+			}
+		}
+	}
 	return 0;
 }
 

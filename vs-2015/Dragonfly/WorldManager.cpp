@@ -8,8 +8,6 @@
 
 df::WorldManager::WorldManager(){
 	setType("WorldManager");
-	GraphicsManager &gm = GraphicsManager::getInstance();
-	boundary = Box(Vector(), (float)gm.getHorizontal(), (float)gm.getVertical());
 }
 
 df::WorldManager & df::WorldManager::getInstance()
@@ -21,6 +19,11 @@ df::WorldManager & df::WorldManager::getInstance()
 int df::WorldManager::startUp()
 {
 	LogManager &log_manager = LogManager::getInstance();
+	GraphicsManager &gm = GraphicsManager::getInstance();
+	boundary = Box(Vector(), (float)gm.getHorizontal(), (float)gm.getVertical());
+	view = boundary;
+	p_view_following = NULL;
+	view_slack = Vector();
 	log_manager.writeLog("WorldManager::startUp(): WorldManager has started up successfully!");
 	Manager::startUp();
 	return 0;
@@ -82,9 +85,33 @@ int df::WorldManager::moveObject(Object *p_o, Vector new_pos)
 	} //object not solid 
 	GraphicsManager &graphics_manager = GraphicsManager::getInstance();
 	p_o->setPosition(new_pos);
-	//send out event if new position is out of bounds
-	if (new_pos.getX() > graphics_manager.getHorizontal() || new_pos.getX() < 0 ||
-		new_pos.getY() > graphics_manager.getVertical() || new_pos.getY() < 0) {
+	if (p_o == p_view_following) {
+		//Get center of view
+		float view_center_x = view.getCorner().getX() + view.getHorizontal() / 2;
+		float view_center_y = view.getCorner().getY() + view.getVertical() / 2;
+
+		//Compute inner "slack" box edges
+		float left = view_center_x - view.getHorizontal() * view_slack.getX() / 2;
+		float right = view_center_x + view.getHorizontal() * view_slack.getX() / 2;
+		float top = view_center_y - view.getVertical() * view_slack.getY() / 2;
+		float bottom = view_center_y + view.getVertical() * view_slack.getY() / 2;
+
+		new_pos = p_o->getPosition();
+		if (new_pos.getX() < left)
+			view_center_x -= left - new_pos.getX();
+		else if (new_pos.getX() > right)
+			view_center_x += new_pos.getX() - right;
+		if (new_pos.getY() < top)
+			view_center_y -= top - new_pos.getY();
+		else if (new_pos.getY() > bottom)
+			view_center_y += new_pos.getY() - bottom;
+		setViewPosition(Vector(view_center_x, view_center_y));
+	}
+	//send out event if new position is out of bounds of world
+	if (new_pos.getX() > getBoundary().getHorizontal() || 
+		new_pos.getX() < getBoundary().getCorner().getX() ||
+		new_pos.getY() > getBoundary().getVertical() ||
+		new_pos.getY() < getBoundary().getCorner().getY()) {
 		EventOut e;
 		p_o->eventHandler(&e);
 	}
@@ -99,7 +126,9 @@ df::ObjectList df::WorldManager::isCollision(const Object * p_o, Vector where)
 		Object * p_temp_o = li.currentObject();
 		if (p_temp_o != p_o) { //do not check on self
 			//if obj is same location and solid
-			if (positionsIntersect(p_temp_o->getPosition(), where) && p_temp_o->isSolid()) 
+			Box b = getWorldBox(p_o, where);
+			Box b_temp = getWorldBox(p_temp_o);
+			if (boxIntersectsBox(b, b_temp) && p_temp_o->isSolid()) 
 				collision_list.insert(p_temp_o);
 		}
 		li.next();
@@ -139,6 +168,56 @@ df::Box df::WorldManager::getBoundary() const
 	return boundary;
 }
 
+void df::WorldManager::setView(Box new_view)
+{
+	view = new_view;
+}
+
+df::Box df::WorldManager::getView() const
+{
+	return view;
+}
+
+void df::WorldManager::setViewPosition(Vector new_view_pos)
+{
+	//Make sure horizontal is not out of world boundary
+	float x = new_view_pos.getX() - view.getHorizontal() / 2;
+	if (x + view.getHorizontal() > boundary.getHorizontal())
+		x = boundary.getHorizontal() - view.getHorizontal();
+	if (x < 0)
+		x = 0;
+
+	//Make sure vertical is not out of world boundary
+	float y = new_view_pos.getY() - view.getVertical() / 2;
+	if (y + view.getVertical() > boundary.getVertical())
+		y = boundary.getVertical() - view.getVertical();
+	if (y < 0)
+		y = 0;
+	Vector new_corner(x, y);
+	view.setCorner(new_corner);
+}
+
+int df::WorldManager::setViewFollowing(Object * p_new_view_following)
+{
+	//Set to NULL to turn off following
+	if (p_new_view_following == NULL) {
+		p_view_following = NULL;
+		return 0;
+	}
+
+	//Iterate over all objects and make sure p_new_view_following is one
+	//of them. Else return error
+	ObjectListIterator li(&updates);
+	for (li.first(); !li.isDone(); li.next()) {
+		if (p_new_view_following == li.currentObject()) {
+			p_view_following = p_new_view_following;
+			setViewPosition(p_view_following->getPosition());
+		}
+	}//did not find the thing, return error
+
+	return -1;
+}
+
 void df::WorldManager::update()
 {
 	//Update positions based on Object velocities
@@ -172,8 +251,9 @@ void df::WorldManager::draw()
 		ObjectListIterator oli(&p_ol);
 		for (oli.first(); !oli.isDone(); oli.next()) {
 			Object *p_temp_o = oli.currentObject();
-			p_temp_o->draw();
-			oli.next();
+			Box temp_box = getWorldBox(p_temp_o);
+			if(boxIntersectsBox(temp_box, view))
+				p_temp_o->draw();
 		}
 	}
 }

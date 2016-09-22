@@ -5,6 +5,7 @@
 #include "Color.h"
 #include "Manager.h"
 #include "Vector.h"
+#include "Frame.h"
 
 //Helper methods
 //Compute character height
@@ -61,6 +62,10 @@ namespace df {
 		//Justified LEFT, CENTER, or RIGHT
 		//Return 0 if ok, else -1
 		int drawString(Vector world_pos, std::string str, Justification just, Color color) const;
+		//Draw frame at window location (x, y) with color
+		//If centered true, then center frame at (x,y)
+		//Return 0 if ok, else -1
+		int drawFrame(Vector world_pos, Frame frame, bool centered, Color color, char transparent) const;
 		//Return window's horizontal maximum in chars
 		int getHorizontal() const;
 		//Return window's vertical maximum in chars

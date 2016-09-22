@@ -3,10 +3,11 @@
 #if defined(_WIN32) || defined(_WIN64)
 #include <Windows.h>
 #elif LINUX
-
-#endif
 #include <time.h>
+#endif
 #include "GraphicsManager.h"
+#include "WorldManager.h"
+#include "Object.h"
 #include "Vector.h"
 #include "utility.h"
 
@@ -40,4 +41,44 @@ bool positionsIntersect(df::Vector p1, df::Vector p2) {
 		return true;
 	else
 		return false;
+}
+
+bool boxIntersectsBox(df::Box A, df::Box B)
+{
+	//Test horizontal overlap
+	bool x_overlap = B.getCorner().getX() <= A.getCorner().getX() &&
+		A.getCorner().getX() <= B.getHorizontal();
+	x_overlap = x_overlap ||
+		(A.getCorner().getX() <= B.getCorner().getX() && 
+			B.getCorner().getX() <= A.getHorizontal());
+	//Test vertical overlap
+	bool y_overlap = B.getCorner().getY() <= A.getCorner().getY() &&
+		A.getCorner().getY() <= B.getVertical();
+	y_overlap = y_overlap ||
+		(A.getCorner().getY() <= B.getCorner().getY() &&
+			B.getCorner().getY() <= A.getVertical());
+	return x_overlap && y_overlap;
+}
+
+df::Box getWorldBox(const df::Object *p_o) {
+	return getWorldBox(p_o, p_o->getPosition());
+}
+
+df::Box getWorldBox(const df::Object *p_o, df::Vector pos) {
+	df::Box temp_box = p_o->getBox();
+	df::Vector corner = temp_box.getCorner();
+	corner.setX(corner.getX() + pos.getX());
+	corner.setY(corner.getY() + pos.getY());
+	temp_box.setCorner(corner);
+
+	return temp_box;
+}
+
+df::Vector worldToView(df::Vector world_pos)
+{
+	df::Vector view_origin = df::WorldManager::getInstance().getView().getCorner();
+	float view_x = view_origin.getX();
+	float view_y = view_origin.getY();
+	df::Vector view_pos(world_pos.getX() - view_x, world_pos.getY() - view_y);
+	return view_pos;
 }
