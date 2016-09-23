@@ -4,10 +4,12 @@
 #include "Vector.h"
 #include "Event.h"
 #include "Sprite.h"
+#include "Box.h"
 
 static int ID = 0;
 
 namespace df {
+	const int MAX_OBJ_EVENTS = 100;
 	enum Solidness {
 		HARD,		//Causes collision and impedes
 		SOFT,		//Causes collision but doesn't impede
@@ -30,6 +32,11 @@ namespace df {
 		int sprite_slowdown_count;
 
 		char sprite_transparency;
+
+		Box box;
+
+		int event_count;
+		std::string event_name[MAX_OBJ_EVENTS];
 
 	public:
 		//Construct object. Set default params and add to
@@ -108,6 +115,14 @@ namespace df {
 
 		void setBox(Box new_box);
 		Box getBox() const;
+
+		//Register for interest in event
+		//Keeps track of manager and event
+		//Returns 0 if ok, else -1
+		int registerInterest(std::string event_type);
+		//Unregister for interest in event
+		//Return 0 if ok, else -1
+		int unregisterInterest(std::string event_type);
 
 		//Update object
 		void Update();

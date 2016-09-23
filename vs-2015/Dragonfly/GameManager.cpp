@@ -17,6 +17,12 @@ df::GameManager::GameManager() {
 	setType("GameManager");
 	frame_time = FRAME_TIME_DEFAULT;
 }
+bool df::GameManager::isValid(std::string event_type)
+{
+	if (event_type == STEP_EVENT)
+		return true;
+	return false;
+}
 df::GameManager &df::GameManager::getInstance()
 {
 	static GameManager instance;

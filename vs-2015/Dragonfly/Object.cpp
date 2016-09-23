@@ -1,6 +1,14 @@
 #include "Object.h"
 #include "WorldManager.h"
 #include "GraphicsManager.h"
+#include "GameManager.h"
+#include "InputManager.h"
+#include "EventStep.h"
+#include "EventOut.h"
+#include "EventCollision.h"
+#include "EventMouse.h"
+#include "EventKeyboard.h"
+#include "EventJoystick.h"
 
 df::Object::Object(){
 	type = "Object";
@@ -20,6 +28,8 @@ df::Object::Object(){
 }
 
 df::Object::~Object(){
+	for (int i = 0; i < event_count; i++)
+		unregisterInterest(event_name[i]);
 	WorldManager &world_manager = WorldManager::getInstance();
 	world_manager.removeObject(this);
 }
@@ -108,6 +118,69 @@ int df::Object::getSpriteSlowdownCount() const
 	return sprite_slowdown_count;
 }
 
+void df::Object::setBox(Box new_box)
+{
+	box = new_box;
+}
+
+df::Box df::Object::getBox() const
+{
+	return box;
+}
+
+int df::Object::registerInterest(std::string event_type)
+{
+	//Check if room
+	if (event_count == MAX_OBJ_EVENTS)
+		return -1;
+
+	//Register w/ appropriate manager
+	if (event_type == STEP_EVENT)
+		GameManager::getInstance().registerInterest(this, event_type);
+	else if (event_type == OUT_EVENT)
+		WorldManager::getInstance().registerInterest(this, event_type);
+	else if (event_type == COLLISION_EVENT)
+		WorldManager::getInstance().registerInterest(this, event_type);
+	else if (event_type == EVENT_MOUSE)
+		InputManager::getInstance().registerInterest(this, event_type);
+	else if (event_type == KEYBOARD_EVENT)
+		InputManager::getInstance().registerInterest(this, event_type);
+	else if (event_type == JOYSTICK_EVENT)
+		InputManager::getInstance().registerInterest(this, event_type);
+
+	event_name[event_count++] = event_type;
+	return 0;
+}
+
+int df::Object::unregisterInterest(std::string event_type)
+{
+	bool found = false;
+	for (int i = 0; i < event_count; i++) {
+		if (event_name[i] == event_type)
+			found = true;
+	}
+	if (!found)
+		return -1;
+	//Unregister w/ appropriate manager
+	if (event_type == STEP_EVENT)
+		GameManager::getInstance().unregisterInterest(this, event_type);
+	else if (event_type == OUT_EVENT)
+		WorldManager::getInstance().unregisterInterest(this, event_type);
+	else if (event_type == COLLISION_EVENT)
+		WorldManager::getInstance().unregisterInterest(this, event_type);
+	else if (event_type == EVENT_MOUSE)
+		InputManager::getInstance().unregisterInterest(this, event_type);
+	else if (event_type == KEYBOARD_EVENT)
+		InputManager::getInstance().unregisterInterest(this, event_type);
+	else if (event_type == JOYSTICK_EVENT)
+		InputManager::getInstance().unregisterInterest(this, event_type);
+	else
+		GameManager::getInstance().unregisterInterest(this, event_type);
+	event_name[event_count] = event_name[event_count - 1];
+	event_count--;
+	return 0;
+}
+
 void df::Object::Update()
 {
 }
@@ -123,7 +196,7 @@ void df::Object::draw()
 		return;
 	int index = getSpriteIndex();
 	GraphicsManager::getInstance().drawFrame(position, p_sprite->getFrame(index),
-		sprite_center, p_sprite->getColor());
+		sprite_center, p_sprite->getColor(), sprite_transparency);
 
 	if (getSpriteSlowdown() == 0)
 		return;

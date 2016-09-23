@@ -13,6 +13,7 @@ namespace df {
 		bool game_over;
 		//Target time for game loop
 		int frame_time;
+		bool isValid(std::string event_type);
 	public:
 		//Get instance of GameManager
 		static GameManager &getInstance();

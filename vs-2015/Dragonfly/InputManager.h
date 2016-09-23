@@ -21,6 +21,7 @@ namespace df {
 		void operator=(InputManager const&);
 		bool joystickMode;
 		JoystickList joysticks;
+		bool isValid(std::string event_type);
 	public:
 		//Get instance of InputManager
 		static InputManager &getInstance();

@@ -18,6 +18,8 @@ namespace df {
 		Box view;				//Player view of game world
 		Vector view_slack;			//View slack before view moves
 		Object *p_view_following; //Object view is following
+
+		bool isValid(std::string event_type);
 	public:
 		static WorldManager &getInstance();
 		//Startup game world. Init everything to empty.

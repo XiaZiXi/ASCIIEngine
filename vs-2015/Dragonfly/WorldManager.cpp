@@ -10,6 +10,15 @@ df::WorldManager::WorldManager(){
 	setType("WorldManager");
 }
 
+bool df::WorldManager::isValid(std::string event_type)
+{
+	if (event_type == OUT_EVENT)
+		return true;
+	else if (event_type == COLLISION_EVENT)
+		return true;
+	return false;
+}
+
 df::WorldManager & df::WorldManager::getInstance()
 {
 	static WorldManager instance;
