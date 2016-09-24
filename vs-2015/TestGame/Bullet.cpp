@@ -20,6 +20,7 @@ Bullet::Bullet(df::Vector hero_pos) {
   // Set starting location, based on hero's position passed in.
   df::Vector p(hero_pos.getX()+3.0f, hero_pos.getY());
   setPosition(p);
+  registerInterest(df::COLLISION_EVENT);
 }
 
 // Handle event.

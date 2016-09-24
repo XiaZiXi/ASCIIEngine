@@ -38,52 +38,67 @@ void df::Manager::shutDown()
 
 int df::Manager::onEvent(const Event *p_e) const{
 	int count = 0;
-	for (int i = 0; i < event_count; i++) {
-		if (event[i] == p_e->getType()) {
-			ObjectListIterator li(&obj_list[i]);
-			while (!li.isDone()) {
-				li.currentObject()->eventHandler(p_e);
-				count++;
-				li.next();
-			}
-		}
+	//for (int i = 0; i < event_count; i++) {
+	//	if (events.find(p_e->getType()) != events.end()) {
+	//		//found
+	//		ObjectList l = events.at(p_e->getType());
+	//		ObjectListIterator li(&l);
+	//		while (!li.isDone()) {
+	//			li.currentObject()->eventHandler(p_e);
+	//			count++;
+	//			li.next();
+	//		}
+	//	}
+	//}
+	ObjectList l = WorldManager::getInstance().getAllObjects();
+	ObjectListIterator ol(&l);
+	for (ol.first(); !ol.isDone(); ol.next()) {
+		ol.currentObject()->eventHandler(p_e);
+		count++;
 	}
 	return count;
 }
 
 int df::Manager::registerInterest(Object * p_o, std::string event_type)
 {
-	for (int i = 0; i < event_count; i++) {
-		if (event[i] == event_type) {
-			obj_list[i].insert(p_o);
-			return 0;
+	if (events.find(event_type) == events.end()) {
+		// not found
+		if (event_count >= MAX_EVENTS) {
+			//event list is full 
+			return -1;
 		}
+		//Add new ObjectList of that event
+		ObjectList *p_objlist = new ObjectList();
+		p_objlist->insert(p_o);
+		events.insert(std::pair<std::string, ObjectList>(event_type, *(p_objlist)));
+		event_count++;
 	}
-	if (event_count >= MAX_EVENTS) {
-		//event list is full
-		return -1;
+	else {
+		// found
+		ObjectList l = events[event_type];
+		l.insert(p_o);
 	}
-	event[event_count] = event_type;
-	obj_list[event_count].clear();
-	obj_list[event_count++].insert(p_o);
 	return 0;
 }
 
 int df::Manager::unregisterInterest(Object * p_o, std::string event_type)
 {
-	int event_idx = -1;
-	for (int i = 0; i < event_count; i++) {
-		if (event[i] == event_type) {
-			obj_list[i].remove(p_o);
-			event_idx = i;
-		}
-	}
-	if (event_idx < 0)
+	std::map<std::string, ObjectList>::iterator it;
+	it = events.find(event_type);
+	if (it == events.end()) {
+		// not found
 		return -1;
-	if (obj_list[event_idx].isEmpty()) {
-		obj_list[event_idx] = obj_list[event_count - 1];
-		event[event_idx] = event[event_count - 1];
-		event_count--;
+	}
+	else {
+		// found
+		//get obj list of event type
+		ObjectList l = events[event_type];
+		//remove obj from that list
+		l.remove(p_o);
+		//if this list is now empty, remove it from the map
+		if (l.isEmpty()) {
+			event_count--;
+		}
 	}
 	return 0;
 }

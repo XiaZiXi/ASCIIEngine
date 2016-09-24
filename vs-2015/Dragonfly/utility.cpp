@@ -37,7 +37,7 @@ void sleep(long int ms) {
 }
 
 bool positionsIntersect(df::Vector p1, df::Vector p2) {
-	if (abs(p1.getX() - p2.getX()) < 1 && abs(p1.getY() - p2.getY()) < 1)
+	if (p1.getX() == p2.getX() && p1.getY() == p2.getY())
 		return true;
 	else
 		return false;
@@ -45,18 +45,24 @@ bool positionsIntersect(df::Vector p1, df::Vector p2) {
 
 bool boxIntersectsBox(df::Box A, df::Box B)
 {
+	df::Vector b1 = B.getCorner();
+	df::Vector a1 = A.getCorner();
+	df::Vector a2(A.getHorizontal(), A.getVertical());
+	df::Vector b2(B.getHorizontal(), B.getVertical());
+	a2 = a2 + a1;
+	b2 = b2 + b1;
 	//Test horizontal overlap
-	bool x_overlap = B.getCorner().getX() <= A.getCorner().getX() &&
-		A.getCorner().getX() <= B.getHorizontal();
+	bool x_overlap = (b1.getX() <= a1.getX()) &&
+		(a1.getX() <= b2.getX());
 	x_overlap = x_overlap ||
-		(A.getCorner().getX() <= B.getCorner().getX() && 
-			B.getCorner().getX() <= A.getHorizontal());
+		((a1.getX() <= b1.getX()) && 
+			(b1.getX() <= a2.getX()));
 	//Test vertical overlap
-	bool y_overlap = B.getCorner().getY() <= A.getCorner().getY() &&
-		A.getCorner().getY() <= B.getVertical();
+	bool y_overlap = (b1.getY() <= a1.getY()) &&
+		(a1.getY() <= b2.getY());
 	y_overlap = y_overlap ||
-		(A.getCorner().getY() <= B.getCorner().getY() &&
-			B.getCorner().getY() <= A.getVertical());
+		(a1.getY() <= b1.getY()) &&
+			(b1.getY() <= a2.getY());
 	return x_overlap && y_overlap;
 }
 
@@ -70,7 +76,6 @@ df::Box getWorldBox(const df::Object *p_o, df::Vector pos) {
 	corner.setX(corner.getX() + pos.getX());
 	corner.setY(corner.getY() + pos.getY());
 	temp_box.setCorner(corner);
-
 	return temp_box;
 }
 

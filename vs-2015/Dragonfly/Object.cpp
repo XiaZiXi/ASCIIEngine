@@ -25,13 +25,17 @@ df::Object::Object(){
 	sprite_index = 0;
 	sprite_slowdown = 0;
 	sprite_slowdown_count = 0;
+	box.setCorner(Vector());
+	box.setHorizontal(1);
+	box.setVertical(1);
+
+	event_count = 0;
 }
 
 df::Object::~Object(){
 	for (int i = 0; i < event_count; i++)
 		unregisterInterest(event_name[i]);
-	WorldManager &world_manager = WorldManager::getInstance();
-	world_manager.removeObject(this);
+	WorldManager::getInstance().removeObject(this);
 }
 
 void df::Object::setId(int new_id)
@@ -147,17 +151,21 @@ int df::Object::registerInterest(std::string event_type)
 		InputManager::getInstance().registerInterest(this, event_type);
 	else if (event_type == JOYSTICK_EVENT)
 		InputManager::getInstance().registerInterest(this, event_type);
-
-	event_name[event_count++] = event_type;
+	else
+		WorldManager::getInstance().registerInterest(this, event_type);
+	event_name[event_count] = event_type;
+	event_count++;
 	return 0;
 }
 
 int df::Object::unregisterInterest(std::string event_type)
 {
+	int i;
 	bool found = false;
-	for (int i = 0; i < event_count; i++) {
-		if (event_name[i] == event_type)
+	for (i = 0; i < event_count; i++) {
+		if (event_name[i] == event_type) {
 			found = true;
+		}
 	}
 	if (!found)
 		return -1;
@@ -175,8 +183,11 @@ int df::Object::unregisterInterest(std::string event_type)
 	else if (event_type == JOYSTICK_EVENT)
 		InputManager::getInstance().unregisterInterest(this, event_type);
 	else
-		GameManager::getInstance().unregisterInterest(this, event_type);
-	event_name[event_count] = event_name[event_count - 1];
+		WorldManager::getInstance().unregisterInterest(this, event_type);
+	for (int j = 0; j < event_count - 1; j++) {
+		event_name[j] = event_name[j + 1];
+	}
+	event_name[event_count] = "";
 	event_count--;
 	return 0;
 }
@@ -273,13 +284,16 @@ df::Solidness df::Object::getSolidness() const
 void df::Object::setSprite(Sprite * p_new_sprite, bool set_box)
 {
 	p_sprite = p_new_sprite;
+	if (set_box) {
+		box.setHorizontal((float)p_sprite->getWidth());
+		box.setVertical((float)p_sprite->getHeight());
+	}
 }
 
 df::Sprite * df::Object::getSprite() const
 {
 	return p_sprite;
-}
-
+}	
 void df::Object::setCentered(bool centered)
 {
 	sprite_center = centered;

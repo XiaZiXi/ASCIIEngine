@@ -56,6 +56,8 @@ int df::WorldManager::insertObject(Object * p_o)
 
 int df::WorldManager::removeObject(Object * p_o)
 {
+	if (p_o == NULL)
+		return -1;
 	ObjectList ol = (updates);
 	ObjectListIterator li(&ol);
 	for (li.first(); !li.isDone(); li.next()) {
@@ -137,6 +139,7 @@ df::ObjectList df::WorldManager::isCollision(const Object * p_o, Vector where)
 			//if obj is same location and solid
 			Box b = getWorldBox(p_o, where);
 			Box b_temp = getWorldBox(p_temp_o);
+			bool a = boxIntersectsBox(b, b_temp);
 			if (boxIntersectsBox(b, b_temp) && p_temp_o->isSolid()) 
 				collision_list.insert(p_temp_o);
 		}

@@ -8,16 +8,12 @@
 #include "GraphicsManager.h"
 #include "LogManager.h"
 #include "WorldManager.h"
+#include "GameManager.h"
 
 // Game includes.
-#include "Bullet.h"
-#include "EventNuke.h"
-#include "Explosion.h"
-#include "GameOver.h"
 #include "Hero.h"
-
-// Define registerInterest in case engine does not.
-static void registerInterest(std::string s) {};
+#include "Saucer.h"
+#include "SaucerSoft.h"
 
 Hero::Hero() {
 
@@ -38,32 +34,11 @@ Hero::Hero() {
   df::Vector pos(7.0f, graphics_manager.getVertical()/2.0f);
   setPosition(pos);
 
-  // Create reticle for firing bullets.
-  p_reticle = new Reticle();
-  p_reticle->draw();
-
-  // Set firing variables.
-  fire_slowdown = 15;
-  fire_countdown = fire_slowdown;
-
-  nuke_count = 1;
+  p_reticle = new Reticle;
 }
 
 Hero::~Hero() {
-
-  // Create GameOver object.
-  GameOver *p_go = new GameOver;
- 
-  // Make big explosion.
-  for (int i=-8; i<=8; i+=5) {
-    for (int j=-5; j<=5; j+=3) {
-      df::Vector temp_pos = this->getPosition();
-      temp_pos.setX(this->getPosition().getX() + i);
-      temp_pos.setY(this->getPosition().getY() + j);
-      Explosion *p_explosion = new Explosion;
-      p_explosion -> setPosition(temp_pos);
-    }
-  }
+	df::GameManager::getInstance().setGameOver();
 }
 
 // Handle event.
@@ -79,11 +54,6 @@ int Hero::eventHandler(const df::Event *p_e) {
   if (p_e->getType() == df::EVENT_MOUSE) {
     const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
     mouse(p_mouse_event);
-    return 1;
-  }
-
-  if (p_e->getType() == df::STEP_EVENT) {
-    step();
     return 1;
   }
 
@@ -103,20 +73,27 @@ void Hero::mouse(const df::EventMouse *p_mouse_event) {
 // Take appropriate action according to key pressed.
 void Hero::kbd(const df::EventKeyboard *p_keyboard_event) {
   df::WorldManager &world_manager = df::WorldManager::getInstance();
-
   switch(p_keyboard_event->getKey()) {
   case df::Keyboard::W:			// up
+	  df::LogManager::getInstance().writeLog("KEYPRESS W");
     if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-      move(-1);
+      move(0, -1);
     break;
   case df::Keyboard::S:			// down
+	  df::LogManager::getInstance().writeLog("KEYPRESS S");
     if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-      move(+1);
+      move(0, +1);
     break;
-  case df::Keyboard::SPACE:		// nuke!
-    if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
-      nuke();
-    break;
+  case df::Keyboard::A:			// down
+	  df::LogManager::getInstance().writeLog("KEYPRESS A");
+	  if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+		  move(-1, 0);
+	  break;
+  case df::Keyboard::D:			// down
+	  df::LogManager::getInstance().writeLog("KEYPRESS D");
+	  if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
+		  move(+1, 0);
+	  break;
   case df::Keyboard::Q:			// quit
     if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
       df::WorldManager &world_manager = df::WorldManager::getInstance();
@@ -129,52 +106,26 @@ void Hero::kbd(const df::EventKeyboard *p_keyboard_event) {
 }
 
 // Move up or down.
-void Hero::move(int dy) {
+void Hero::move(int dx, int dy) {
+	df::LogManager::getInstance().writeLog("move %d %d", dx, dy);
   df::GraphicsManager &graphics_manager = df::GraphicsManager::getInstance();
   df::WorldManager &world_manager = df::WorldManager::getInstance();
-  df::Vector new_pos(getPosition().getX(), getPosition().getY() + dy);
+  df::Vector new_pos(getPosition().getX() + dx, getPosition().getY() + dy);
 
   // If stays on screen, allow move.
   if ((new_pos.getY() >= 0) && 
-        (new_pos.getY() < graphics_manager.getVertical()))
+        (new_pos.getY() < graphics_manager.getVertical()) &&
+		(new_pos.getX() >= 0) &&
+		(new_pos.getX() < graphics_manager.getHorizontal())
+	  )
       world_manager.moveObject(this, new_pos);
 }
 
 // Fire bullet towards target.
 void Hero::fire(df::Vector target) {
-
-  // See if time to fire.
-  if (fire_countdown > 0)
-    return;
-  fire_countdown = fire_slowdown;
-
-  // Fire Bullet towards target.
-  Bullet *p = new Bullet(getPosition());
-  df::Vector v = df::Vector(p->getVelocity().getX(),
-	  ((float)(target.getY() - getPosition().getY())) /
-	  ((float)(target.getX() - getPosition().getX())));
-   p->setVelocity(v);
-}
-
-// Decrease fire restriction.
-void Hero::step() {
-  fire_countdown--;
-  if (fire_countdown < 0)
-    fire_countdown = 0;
-}
-
-// Send nuke event to all objects.
-void Hero::nuke() {
-
-  // Check if nukes left.
-  if (!nuke_count) 
-    return;
-  nuke_count--;
-
-  // Create "nuke" event and send to interested.
-  df::WorldManager &world_manager = df::WorldManager::getInstance();
-  EventNuke nuke;
-  world_manager.onEvent(&nuke);
+	df::LogManager::getInstance().writeLog("Placed object at %f f", target.getX(), target.getY());
+	SaucerSoft *s = new SaucerSoft;
+	s->setPosition(target);
 }
 
 // 

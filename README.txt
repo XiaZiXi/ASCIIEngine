@@ -1,16 +1,28 @@
-Dragonfly Naiad
+Dragonfly Spawn
 Kelly Zhang (kezhang)
 
 Engine Code & Game Code written and tested in Visual Studio 2015. 
-NOT YET TESTED ON LINUX. make WITH CAUTION.
+NOT TESTED ON LINUX. make WITH CAUTION.
 
 Engine contains the basic functionality expected in this iteration, along with basic Joystick support.
 
 TestGame contains the Dragonfly Naiad version of Saucer Shoot.
 
+CollisionTest contains visual tests for object collision and movement.
+
+DragonflyTests contains (sparse) unit testing for individual classes in the library.
+    - Run DragonflyTests.exe in Debug/
+    - Test output should appear in dragonfly.log
+
+ERRORS:
+
+
 KNOWN BUGS:
-Bullets sometimes do not go the full length and are destroyed early.
-Graphical rendering hiccups. (Saucers "teleport")
+- Event registration doesn't work & causes access violations. Reverted back to having onEvent call all objects in the game world.
+
+NOT YET TESTED:
+- Sprite drawing
+- Audio & Music
 
 --------------------------------------------------------------------
 
@@ -31,9 +43,13 @@ Directories:
 
 vs-2015/ - contains Visual Studio solution files (Microsoft Windows)
 vs-2015/Debug - should contain the Dragonfly library and the TestGame.exe
-vs-2015/TestGame/ - contains a "game" that makes a bunch of heroes to test engine capabilities
 vs-2015/Dragonfly/ - contains engine source code
 
-dragonfly.log is in vs-2015/Debug/
+##Projects that use Dragonfly library##
+vs-2015/TestGame/
+vs-2015/CollisionTest/
+vs-2015/DragonflyTests
+
+DragonflyTemplate.zip - Visual Studio Template with preloaded project settings to use Dragonfly.
 
 --------------------------------------------------------------------

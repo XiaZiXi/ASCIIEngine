@@ -11,13 +11,10 @@
  
 // Game includes.
 #include "Hero.h"
-#include "Star.h"
 #include "Saucer.h"
 
 // Function prototypes.
 void populateWorld(void);
-
-void loadResources(void);
  
 int main(int argc, char *argv[]) {
   df::LogManager &log_manager = df::LogManager::getInstance();
@@ -36,8 +33,6 @@ int main(int argc, char *argv[]) {
   // Set flush of logfile during development (when done, make false).
   log_manager.setFlush(true);
 
-  loadResources();
-
   // Setup some objects.
   populateWorld();
  
@@ -47,23 +42,13 @@ int main(int argc, char *argv[]) {
   // Shut everything down.
   game_manager.shutDown();
 }
-
-void loadResources(void) {
-	df::ResourceManager &resource_manager = df::ResourceManager::getInstance();
-	resource_manager.loadSprite("sprites/ship-spr.txt", "Hero");
-}
  
 // Populate world with some objects.
 void populateWorld(void) {
-
-  // Spawn some Stars.
-  /*for (int i=0; i<16; i++) 
-    new Star;*/
- 
   // Create hero.
   new Hero;
 
   // Spawn some saucers to shoot.
-  for (int i=0; i<1; i++)
+  for (int i=0; i<16; i++)
     new Saucer;
 }

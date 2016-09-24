@@ -14,10 +14,8 @@ namespace df {
 		bool is_started;		//True when started successfully
 
 		int event_count;				//Number of events
-		std::string event[MAX_EVENTS];	//List of events
-		std::map <std::string, int> events;
-		ObjectList obj_list[MAX_EVENTS];	//Objects interested in event
-	
+		std::map <std::string, ObjectList> events;
+
 		//Check if event is handled by this Manager
 		//If handled, return true, else false
 		//(Base Manager always returns false)

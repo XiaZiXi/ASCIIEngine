@@ -6,14 +6,12 @@
 
 // Engine includes.
 #include "EventCollision.h"
-#include "EventNuke.h"
 #include "EventOut.h"
 #include "GraphicsManager.h"
 #include "LogManager.h"
 #include "WorldManager.h"
  
 // Game includes.
-#include "Explosion.h"
 #include "Saucer.h"
 
 Saucer::Saucer() {
@@ -26,11 +24,7 @@ Saucer::Saucer() {
   setVelocity(df::Vector(-0.25,0)); // 1 space left every 4 frames
 
   moveToStart();
-
-  // Register interest in "nuke" event.
-  registerInterest(NUKE_EVENT);
-  registerInterest(df::OUT_EVENT);
-  registerInterest(df::COLLISION_EVENT);
+  color = df::GREEN;
 }
 
 // Handle event.
@@ -47,23 +41,14 @@ int Saucer::eventHandler(const df::Event *p_e) {
     hit(p_collision_event);
     return 1;
   }
-
-  if (p_e->getType() == NUKE_EVENT) {
- 
-    // Create explosion.
-    Explosion *p_explosion = new Explosion;
-    p_explosion -> setPosition(this -> getPosition());
- 
-    // Delete self.
-    df::WorldManager &world_manager = df::WorldManager::getInstance();
-    world_manager.markForDelete(this);
- 
-    // Saucers appear stay around perpetually
-    new Saucer;
-  }
  
   // If get here, have ignored this event.
   return 0;
+}
+
+void Saucer::setColor(df::Color newColor)
+{
+	color = newColor;
 }
 
 // If moved off left edge, move back to far right.
@@ -76,9 +61,6 @@ void Saucer::out() {
   // Otherwise, move back to far right.
   moveToStart();
 
-  // Spawn new Saucer to make the game get harder.
-  new Saucer;
-
 }
 
 // If saucer and player collide, mark both for deletion.
@@ -89,24 +71,10 @@ void Saucer::hit(const df::EventCollision *p_c) {
       (p_c -> getObject2() -> getType() == "Saucer"))
     return;
 
-  // If Bullet ...
-  if ((p_c -> getObject1() -> getType() == "Bullet") ||
-      (p_c -> getObject2() -> getType() == "Bullet")) {
-
-    // Create an explosion.
-    Explosion *p_explosion = new Explosion;
-    p_explosion -> setPosition(this -> getPosition());
-
-    // Saucers appear stay around perpetually.
-    new Saucer;
-  }
-
   // If Hero, mark both objects for destruction.
   if (((p_c -> getObject1() -> getType()) == "Hero") || 
       ((p_c -> getObject2() -> getType()) == "Hero")) {
-    df::WorldManager &world_manager = df::WorldManager::getInstance();
-    world_manager.markForDelete(p_c -> getObject1());
-    world_manager.markForDelete(p_c -> getObject2());
+	  df::LogManager::getInstance().writeLog("Collided with %s at %f, %f!", "Hero", p_c->getPosition().getX(), p_c->getPosition().getY());
   }
 
 }
@@ -139,5 +107,5 @@ void Saucer::moveToStart() {
 
 void Saucer::draw() {
   df::GraphicsManager &graphics_manager = df::GraphicsManager::getInstance();
-  graphics_manager.drawCh(getPosition(), SAUCER_CHAR, df::GREEN); 
+  graphics_manager.drawCh(getPosition(), SAUCER_CHAR, color); 
 }
