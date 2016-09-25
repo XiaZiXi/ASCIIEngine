@@ -1,0 +1,25 @@
+frames 5
+width 7
+height 3
+color green
+ \___/ 
+ /oAo\ 
+|=====|
+end
+ \___/ 
+ /-A-\ 
+|=====|
+end
+  /__\ 
+ /-A-\ 
+|=====|
+end
+ /__\  
+ /oAo\ 
+|=====|
+end
+ \___/ 
+ /-A-\ 
+|=====|
+end
+eof

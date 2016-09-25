@@ -9,7 +9,8 @@
 #include "LogManager.h"
 #include "WorldManager.h"
 #include "GameManager.h"
-
+#include "ResourceManager.h"
+#include "Sprite.h"
 // Game includes.
 #include "Hero.h"
 #include "Saucer.h"
@@ -28,7 +29,12 @@ Hero::Hero() {
 
   // Set object type.
   setType("Hero");
-
+  df::Sprite *h = df::ResourceManager::getInstance().getSprite("ship");
+  if (h != NULL) {
+	  setSprite(h);
+	  setSpriteSlowdown(1);
+	  setTransparency(); //Transparent sprite
+  }
   // Set starting location.
   df::GraphicsManager &graphics_manager = df::GraphicsManager::getInstance();
   df::Vector pos(7.0f, graphics_manager.getVertical()/2.0f);
@@ -126,10 +132,4 @@ void Hero::fire(df::Vector target) {
 	df::LogManager::getInstance().writeLog("Placed object at %f f", target.getX(), target.getY());
 	SaucerSoft *s = new SaucerSoft;
 	s->setPosition(target);
-}
-
-// 
-void Hero::draw() {
-  df::GraphicsManager &graphics_manager = df::GraphicsManager::getInstance();
-  graphics_manager.drawCh(getPosition(), HERO_CHAR, df::BLUE); 
 }

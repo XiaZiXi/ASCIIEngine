@@ -15,6 +15,7 @@
 
 // Function prototypes.
 void populateWorld(void);
+void loadResources(void);
  
 int main(int argc, char *argv[]) {
   df::LogManager &log_manager = df::LogManager::getInstance();
@@ -33,6 +34,8 @@ int main(int argc, char *argv[]) {
   // Set flush of logfile during development (when done, make false).
   log_manager.setFlush(true);
 
+  loadResources();
+
   // Setup some objects.
   populateWorld();
  
@@ -43,6 +46,11 @@ int main(int argc, char *argv[]) {
   game_manager.shutDown();
 }
  
+void loadResources(void) {
+	df::ResourceManager &rm = df::ResourceManager::getInstance();
+	rm.loadSprite("sprites/ship-spr.txt", "ship");
+}
+
 // Populate world with some objects.
 void populateWorld(void) {
   // Create hero.

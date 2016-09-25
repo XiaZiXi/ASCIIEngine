@@ -1,0 +1,9 @@
+frames 2
+width 27
+height 1
+color yellow
+Right-click to fire missile
+end
+                           
+end
+eof
