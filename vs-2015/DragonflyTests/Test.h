@@ -11,8 +11,8 @@ private:
 public:
 	Test();
 	virtual void setup(std::string name);
-	bool assertOK(int actual, int expected, std::string test, std::string message);
-	bool assertERROR(int actual, int expected, std::string test, std::string message);
+	bool assertOK(int actual, std::string test, std::string message);
+	bool assertERROR(int actual, std::string test, std::string message);
 	bool assertEqual(bool actual, bool expected, std::string test, std::string message);
 	bool assertEqual(int actual, int expected, std::string test, std::string message);
 	bool assertEqual(float actual, float expected, std::string test, std::string message);

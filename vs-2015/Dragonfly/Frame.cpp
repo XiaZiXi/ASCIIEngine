@@ -11,7 +11,7 @@ df::Frame::Frame(int new_width, int new_height, std::string new_frame_str)
 {
 	width = new_width;
 	height = new_height;
-	new_frame_str = new_frame_str;
+	frame_str = new_frame_str;
 }
 
 void df::Frame::setWidth(int new_width)

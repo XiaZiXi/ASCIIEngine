@@ -22,30 +22,26 @@ void Test::setup(std::string name)
 	LogManager::getInstance().writeLog("Setting up tests for %s...", testname.c_str());
 }
 
-bool Test::assertOK(int actual, int expected, std::string test, std::string message)
+bool Test::assertOK(int actual, std::string test, std::string message)
 {
 	testCount++;
-	if (actual != expected) {
-		fail(actual, expected, test, message, "OK");
+	if (actual != 0) {
+		fail(actual, 0, test, message, "OK");
 		return false;
 	}
-	char * a = actual ? "true" : "false";
-	char * e = expected ? "true" : "false";
-	LogManager::getInstance().writeLog("Pass %s OK - Actual: %s Expected: %s - %s", test.c_str(), a, e, message.c_str());
+	LogManager::getInstance().writeLog("Pass %s OK - Actual: %d Expected: 0 - %s", test.c_str(), actual, message.c_str());
 	successCount++;
 	return true;
 }
 
-bool Test::assertERROR(int actual, int expected, std::string test, std::string message)
+bool Test::assertERROR(int actual, std::string test, std::string message)
 {
 	testCount++;
-	if (actual != expected) {
-		fail(actual, expected, test, message, "ERROR");
+	if (actual != -1) {
+		fail(actual, -1, test, message, "ERROR");
 		return false;
 	}
-	char * a = actual ? "true" : "false";
-	char * e = expected ? "true" : "false";
-	LogManager::getInstance().writeLog("Pass %s ERROR - Actual: %s Expected: %s - %s", test.c_str(), a, e, message.c_str());
+	LogManager::getInstance().writeLog("Pass %s ERROR - Actual: %d Expected: -1 - %s", test.c_str(), actual, message.c_str());
 	successCount++;
 	return true;
 }

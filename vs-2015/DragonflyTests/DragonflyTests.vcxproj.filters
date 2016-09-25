@@ -30,7 +30,10 @@
     <ClCompile Include="VectorTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sandbox.cpp">
+    <ClCompile Include="SpriteTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +47,10 @@
     <ClInclude Include="VectorTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sandbox.h">
+    <ClInclude Include="SpriteTest.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

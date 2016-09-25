@@ -138,14 +138,16 @@
     <Text Include="df-config.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sandbox.cpp" />
+    <ClCompile Include="AudioTest.cpp" />
+    <ClCompile Include="SpriteTest.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="UtilityTest.cpp" />
     <ClCompile Include="VectorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sandbox.h" />
+    <ClInclude Include="AudioTest.h" />
+    <ClInclude Include="SpriteTest.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="UtilityTest.h" />
     <ClInclude Include="VectorTest.h" />
