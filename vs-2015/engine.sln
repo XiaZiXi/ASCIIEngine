@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DragonflyTests", "Dragonfly
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CollisionTest", "CollisionTest\CollisionTest.vcxproj", "{F99484E4-7AAB-4393-81AB-9B7DA160C687}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AudioTest", "AudioTest\AudioTest.vcxproj", "{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -60,6 +62,16 @@ Global
 		{F99484E4-7AAB-4393-81AB-9B7DA160C687}.Release|x64.Build.0 = Release|x64
 		{F99484E4-7AAB-4393-81AB-9B7DA160C687}.Release|x86.ActiveCfg = Release|Win32
 		{F99484E4-7AAB-4393-81AB-9B7DA160C687}.Release|x86.Build.0 = Release|Win32
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Debug|ARM.ActiveCfg = Debug|Win32
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Debug|x64.ActiveCfg = Debug|x64
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Debug|x64.Build.0 = Debug|x64
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Debug|x86.ActiveCfg = Debug|Win32
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Debug|x86.Build.0 = Debug|Win32
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Release|ARM.ActiveCfg = Release|Win32
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Release|x64.ActiveCfg = Release|x64
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Release|x64.Build.0 = Release|x64
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Release|x86.ActiveCfg = Release|Win32
+		{C8E07D5E-2BDF-4DD8-A419-1717B12F9F56}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

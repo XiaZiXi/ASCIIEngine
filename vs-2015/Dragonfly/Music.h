@@ -35,6 +35,7 @@ namespace df {
 		//pause music
 		void pause();
 
+		bool isPlaying() const;
 		//Return SFML music
 		sf::Music *getMusic();
 	};

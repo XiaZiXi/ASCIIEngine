@@ -12,6 +12,8 @@ bool boxIntersectsBox(df::Box A, df::Box B);
 df::Box getWorldBox(const df::Object *p_o);
 df::Box getWorldBox(const df::Object *p_o, df::Vector pos);
 df::Vector worldToView(df::Vector world_pos);
+df::Vector viewToWorld(df::Vector view_pos);
+std::string toString(int i);
 bool boxContainsPosition(df::Box box, df::Vector pos);
 bool lineIntersectsLine();
 bool lineIntersectsBox();

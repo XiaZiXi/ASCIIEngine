@@ -2,6 +2,7 @@
 #include "LogManager.h"
 #include "GraphicsManager.h"
 #include "ObjectList.h"
+#include "ViewObject.h"
 #include "EventCollision.h"
 #include "EventOut.h"
 #include "utility.h"
@@ -264,7 +265,8 @@ void df::WorldManager::draw()
 		for (oli.first(); !oli.isDone(); oli.next()) {
 			Object *p_temp_o = oli.currentObject();
 			Box temp_box = getWorldBox(p_temp_o);
-			if(boxIntersectsBox(temp_box, view))
+			if(boxIntersectsBox(temp_box, view) ||
+				dynamic_cast<ViewObject *>(p_temp_o))
 				p_temp_o->draw();
 		}
 	}

@@ -38,6 +38,15 @@ void df::Music::pause()
 	music.pause();
 }
 
+bool df::Music::isPlaying() const
+{
+	//Check status of music loop
+	if (music.getStatus() == sf::Music::Playing)
+		return true;
+	else
+		return false;
+}
+
 sf::Music * df::Music::getMusic()
 {
 	return &music;

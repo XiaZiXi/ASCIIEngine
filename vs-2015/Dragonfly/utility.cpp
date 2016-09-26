@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <sstream>
 #if defined(_WIN32) || defined(_WIN64)
 #include <Windows.h>
 #elif LINUX
@@ -10,6 +11,8 @@
 #include "Object.h"
 #include "Vector.h"
 #include "utility.h"
+
+using std::stringstream;
 
 char *getTimeStamp()
 {
@@ -86,4 +89,18 @@ df::Vector worldToView(df::Vector world_pos)
 	float view_y = view_origin.getY();
 	df::Vector view_pos(world_pos.getX() - view_x, world_pos.getY() - view_y);
 	return view_pos;
+}
+
+df::Vector viewToWorld(df::Vector view_pos) {
+	df::Vector world_origin = df::WorldManager::getInstance().getBoundary().getCorner();
+	float world_x = world_origin.getX();
+	float world_y = world_origin.getY();
+	df::Vector world_pos(view_pos.getX() + world_x, view_pos.getY() + world_y);
+	return world_pos;
+}
+
+std::string toString(int i) {
+	std::stringstream ss;
+	ss << i;
+	return ss.str();
 }
