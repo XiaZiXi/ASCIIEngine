@@ -21,6 +21,7 @@ AudioPrompt::AudioPrompt(std::string new_label, std::string new_key, AudioType n
 			sound = s;
 		break;
 	}
+	registerInterest(EVENT_AUDIO_TRIGGER);
 }
 
 int AudioPrompt::eventHandler(const df::Event * p_e)

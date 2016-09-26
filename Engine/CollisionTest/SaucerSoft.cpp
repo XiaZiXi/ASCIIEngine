@@ -22,6 +22,9 @@ SaucerSoft::SaucerSoft() {
   setType("SaucerSoft");
   setSolidness(df::SOFT);
   setAltitude(0);
+  setVelocity(df::Vector(0.0f, -0.75f));
+  registerInterest(df::OUT_EVENT);
+  registerInterest(df::COLLISION_EVENT);
 }
 
 // Handle event.
@@ -47,7 +50,7 @@ int SaucerSoft::eventHandler(const df::Event *p_e) {
 void SaucerSoft::out() {
 
   // If haven't moved off left edge, then nothing to do.
-  if (getPosition().getX() >= 0)
+  if (getPosition().getY() >= 0)
     return;
 
   // Otherwise, move back to far right.
@@ -76,8 +79,29 @@ void SaucerSoft::hit(const df::EventCollision *p_c) {
 
 }
 
-// Move saucer to starting location on right side of screen.
+// Move saucer to starting location on bottom of screen.
 void SaucerSoft::moveToStart() {
+	df::GraphicsManager &graphics_manager = df::GraphicsManager::getInstance();
+	df::WorldManager &world_manager = df::WorldManager::getInstance();
+	df::Vector temp_pos;
+
+	// Get world boundaries.
+	int world_horiz = (int)graphics_manager.getHorizontal();
+	int world_vert = (int)graphics_manager.getVertical();
+
+	// x is off right side of screen.
+	temp_pos.setX(rand() % (world_horiz)+0.0f);
+	// y is in vertical range.
+	temp_pos.setY(world_vert + rand() % world_vert + 3.0f);
+
+	// If collision, move right slightly until empty space.
+	df::ObjectList collision_list = world_manager.isCollision(this, temp_pos);
+	while (!collision_list.isEmpty()) {
+		temp_pos.setY(temp_pos.getY() + 1.0f);
+		collision_list = world_manager.isCollision(this, temp_pos);
+	}
+
+	world_manager.moveObject(this, temp_pos);
 }
 
 void SaucerSoft::draw() {

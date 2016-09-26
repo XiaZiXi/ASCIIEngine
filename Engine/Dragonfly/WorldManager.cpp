@@ -57,10 +57,10 @@ int df::WorldManager::startUp()
 
 void df::WorldManager::shutDown()
 {
-	ObjectList ol = (updates);
-	ObjectListIterator li(&ol);
-	for (li.first(); !li.isDone(); li.next())
-		delete li.currentObject();
+	ObjectListIterator li(&updates);
+	for (li.first(); !li.isDone(); li.next()) {
+		//delete li.currentObject();
+	}
 	Manager::shutDown();
 }
 

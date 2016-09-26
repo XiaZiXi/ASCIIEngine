@@ -25,6 +25,8 @@ Saucer::Saucer() {
 
   moveToStart();
   color = df::GREEN;
+  registerInterest(df::OUT_EVENT);
+  registerInterest(df::COLLISION_EVENT);
 }
 
 // Handle event.

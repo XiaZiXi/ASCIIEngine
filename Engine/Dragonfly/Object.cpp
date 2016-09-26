@@ -3,6 +3,7 @@
 #include "GraphicsManager.h"
 #include "GameManager.h"
 #include "InputManager.h"
+#include "ResourceManager.h"
 #include "EventStep.h"
 #include "EventOut.h"
 #include "EventCollision.h"
@@ -35,6 +36,9 @@ df::Object::Object(){
 df::Object::~Object(){
 	for (int i = 0; i < event_count; i++)
 		unregisterInterest(event_name[i]);
+	if (p_sprite != NULL) {
+		ResourceManager::getInstance().unloadSprite(p_sprite->getLabel());
+	}
 	WorldManager::getInstance().removeObject(this);
 }
 
@@ -186,6 +190,7 @@ int df::Object::unregisterInterest(std::string event_type)
 	for (int j = 0; j < event_count - 1; j++) {
 		event_name[j] = event_name[j + 1];
 	}
+	event_name[event_count] = "";
 	event_count--;
 	return 0;
 }

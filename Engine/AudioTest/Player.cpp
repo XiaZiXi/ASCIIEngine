@@ -5,6 +5,10 @@
 #include "Player.h"
 #include "EventAudioTrigger.h"
 
+Player::Player() {
+	registerInterest(df::KEYBOARD_EVENT);
+}
+
 int Player::eventHandler(const df::Event * p_e)
 {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {

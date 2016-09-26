@@ -20,7 +20,7 @@ df::ViewObject::ViewObject()
 	setLocation(TOP_CENTER);
 	setColor(COLOR_DEFAULT);
 
-	//registerInterest(VIEW_EVENT);
+	registerInterest(VIEW_EVENT);
 }
 
 void df::ViewObject::draw()

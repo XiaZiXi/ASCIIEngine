@@ -16,6 +16,9 @@ DragonflyTests contains (sparse) unit testing for individual classes in the libr
     - Run DragonflyTests.exe in Debug/
     - Test output should appear in dragonfly.log
 
+BUGS:
+- Frame animation slowdown not working correctly
+
 --------------------------------------------------------------------
 
 To build:

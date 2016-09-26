@@ -93,6 +93,8 @@ int df::Manager::unregisterInterest(Object * p_o, std::string event_type)
 			obj_list[i] = obj_list[i + 1];
 		for (int j = 0; j < event_count - 1; j++)
 			events[j] = events[j + 1];
+		events[event_count] = "";
+		obj_list[event_count].clear();
 		event_count--;
 	}
 
