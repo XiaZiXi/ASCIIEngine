@@ -69,8 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\SFML-2.4\include;..\Dragonfly\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\SFML-2.4\lib;..\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\SFML-2.4\include;..\Dragonfly\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\SFML-2.4\lib;..\Dragonfly\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\..\..\SFML-2.4\include;..\Dragonfly\;$(IncludePath)</IncludePath>
@@ -81,7 +81,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Dragonfly\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Dragonfly\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>

@@ -8,21 +8,13 @@ Engine contains the basic functionality expected in this iteration, along with b
 
 TestGame contains the Dragonfly Naiad version of Saucer Shoot.
 
+AudioTest contains a soundboard that tests Audio and ViewObject functionalities.
+
 CollisionTest contains visual tests for object collision and movement.
 
 DragonflyTests contains (sparse) unit testing for individual classes in the library.
     - Run DragonflyTests.exe in Debug/
     - Test output should appear in dragonfly.log
-
-ERRORS:
-
-
-KNOWN BUGS:
-- Event registration doesn't work & causes access violations. Reverted back to having onEvent call all objects in the game world.
-
-NOT YET TESTED:
-- Sprite drawing
-- Audio & Music
 
 --------------------------------------------------------------------
 
@@ -39,17 +31,32 @@ Linux or Mac, F5 on Windows from Visual Studio)
 
 --------------------------------------------------------------------
 
+Using this version of Dragonfly:
+
+1) Download .zip or clone project
+2) Extract the header files and the lib/ folder from Dragonfly/ and place them in a separate folder
+3) Create an empty C++ project
+4) Point additional library settings to the lib/ folder
+5) Point additional include settings to where the header files are
+6) Repeat steps 4 & 5 for SFML library
+
+--------------------------------------------------------------------
+
+
 Directories:
 
-vs-2015/ - contains Visual Studio solution files (Microsoft Windows)
-vs-2015/Debug - should contain the Dragonfly library and the TestGame.exe
-vs-2015/Dragonfly/ - contains engine source code
+Engine/ - contains Visual Studio solution files (Microsoft Windows)
+Engine/Debug - contains build files for the solution
+Engine/Dragonfly/ - contains engine source code & project settings
+Engine/Dragonfly/lib/ - contains Dragonfly .lib file
+Engine/Dragonfly/include/ - contains Dragonfly header files
 
 ##Projects that use Dragonfly library##
-vs-2015/TestGame/
-vs-2015/CollisionTest/
-vs-2015/DragonflyTests
+TestGame/
+Engine/CollisionTest/
+Engine/DragonflyTests/
+Engine/AudioTest/
 
-DragonflyTemplate.zip - Visual Studio Template with preloaded project settings to use Dragonfly.
+DragonflyTemplate.zip - Visual Studio Template with preloaded project settings to use Dragonfly. (TODO: Outdated project settings. Fix)
 
 --------------------------------------------------------------------

@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F99484E4-7AAB-4393-81AB-9B7DA160C687}</ProjectGuid>
-    <RootNamespace>CollisionTest</RootNamespace>
+    <ProjectGuid>{0E658580-EE34-49AF-8F53-D7450AA5634A}</ProjectGuid>
+    <RootNamespace>TestGame</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -69,8 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\SFML-2.4\include;..\Dragonfly\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\SFML-2.4\lib;..\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\SFML-2.4\include;..\Engine\Dragonfly\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\SFML-2.4\lib;..\Engine\Dragonfly\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\..\..\SFML-2.4\include;..\Dragonfly\;$(IncludePath)</IncludePath>
@@ -81,7 +81,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Dragonfly\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Engine\Dragonfly\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -135,17 +135,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="EventNuke.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Reticle.cpp" />
     <ClCompile Include="Saucer.cpp" />
-    <ClCompile Include="SaucerSoft.cpp" />
+    <ClCompile Include="Star.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="EventNuke.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Reticle.h" />
     <ClInclude Include="Saucer.h" />
-    <ClInclude Include="SaucerSoft.h" />
+    <ClInclude Include="Star.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt" />

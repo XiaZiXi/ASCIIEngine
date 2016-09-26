@@ -18,24 +18,93 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventCollision.cpp" />
+    <ClCompile Include="EventJoystick.cpp" />
+    <ClCompile Include="EventKeyboard.cpp" />
+    <ClCompile Include="EventMouse.cpp" />
+    <ClCompile Include="EventOut.cpp" />
+    <ClCompile Include="EventStep.cpp" />
+    <ClCompile Include="EventView.cpp" />
+    <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GraphicsManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Joystick.cpp" />
+    <ClCompile Include="JoystickList.cpp" />
+    <ClCompile Include="JoystickListIterator.cpp" />
+    <ClCompile Include="LogManager.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Music.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectList.cpp" />
+    <ClCompile Include="ObjectListIterator.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="utility.cpp" />
+    <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="ViewObject.cpp" />
+    <ClCompile Include="WorldManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Box.h" />
+    <ClInclude Include="include\Clock.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventCollision.h" />
+    <ClInclude Include="include\EventJoystick.h" />
+    <ClInclude Include="include\EventKeyboard.h" />
+    <ClInclude Include="include\EventMouse.h" />
+    <ClInclude Include="include\EventOut.h" />
+    <ClInclude Include="include\EventStep.h" />
+    <ClInclude Include="include\EventView.h" />
+    <ClInclude Include="include\Frame.h" />
+    <ClInclude Include="include\GameManager.h" />
+    <ClInclude Include="include\GraphicsManager.h" />
+    <ClInclude Include="include\InputManager.h" />
+    <ClInclude Include="include\Joystick.h" />
+    <ClInclude Include="include\JoystickList.h" />
+    <ClInclude Include="include\JoystickListIterator.h" />
+    <ClInclude Include="include\LogManager.h" />
+    <ClInclude Include="include\Manager.h" />
+    <ClInclude Include="include\Music.h" />
+    <ClInclude Include="include\Object.h" />
+    <ClInclude Include="include\ObjectList.h" />
+    <ClInclude Include="include\ObjectListIterator.h" />
+    <ClInclude Include="include\ResourceManager.h" />
+    <ClInclude Include="include\Sound.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\utility.h" />
+    <ClInclude Include="include\Vector.h" />
+    <ClInclude Include="include\ViewObject.h" />
+    <ClInclude Include="include\WorldManager.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0E658580-EE34-49AF-8F53-D7450AA5634A}</ProjectGuid>
-    <RootNamespace>TestGame</RootNamespace>
+    <ProjectGuid>{2933FFD1-9244-4D04-894D-EF64CB61AD4B}</ProjectGuid>
+    <RootNamespace>Dragonfly</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>Dragonfly</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -69,25 +138,29 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\SFML-2.4\include;..\Dragonfly\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\SFML-2.4\lib;..\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\SFML-2.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\SFML-2.4\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\$(ProjectName)\lib\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\..\..\SFML-2.4\include;..\Dragonfly\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\SFML-2.4\lib;..\Debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\SFML-2.4\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Dragonfly\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>WIN32;DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\SFML-2.4\include;include\%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;dragonfly.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-main-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <NoEntryPoint>true</NoEntryPoint>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>..\..\..\SFML-2.4\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -106,14 +179,19 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Dragonfly\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;SFML_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\SFML-2.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <NoEntryPoint>true</NoEntryPoint>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>..\..\..\SFML-2.4\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -129,35 +207,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Dragonfly\Dragonfly.vcxproj">
-      <Project>{2933ffd1-9244-4d04-894d-ef64cb61ad4b}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="EventNuke.cpp" />
-    <ClCompile Include="Explosion.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="GameOver.cpp" />
-    <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="Reticle.cpp" />
-    <ClCompile Include="Saucer.cpp" />
-    <ClCompile Include="Star.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="EventNuke.h" />
-    <ClInclude Include="Explosion.h" />
-    <ClInclude Include="GameOver.h" />
-    <ClInclude Include="Hero.h" />
-    <ClInclude Include="Reticle.h" />
-    <ClInclude Include="Saucer.h" />
-    <ClInclude Include="Star.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="df-config.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
