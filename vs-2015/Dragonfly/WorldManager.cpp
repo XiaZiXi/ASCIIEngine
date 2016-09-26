@@ -5,6 +5,11 @@
 #include "ViewObject.h"
 #include "EventCollision.h"
 #include "EventOut.h"
+#include "EventJoystick.h"
+#include "EventStep.h"
+#include "EventView.h"
+#include "EventKeyboard.h"
+#include "EventMouse.h"
 #include "utility.h"
 
 df::WorldManager::WorldManager(){
@@ -17,7 +22,18 @@ bool df::WorldManager::isValid(std::string event_type)
 		return true;
 	else if (event_type == COLLISION_EVENT)
 		return true;
-	return false;
+	else if (event_type == STEP_EVENT)
+		return false;
+	else if (event_type == KEYBOARD_EVENT)
+		return false;
+	else if (event_type == EVENT_MOUSE)
+		return false;
+	else if (event_type == JOYSTICK_EVENT)
+		return false;
+	else if (event_type == VIEW_EVENT)
+		return true;
+	else 
+		return true;
 }
 
 df::WorldManager & df::WorldManager::getInstance()

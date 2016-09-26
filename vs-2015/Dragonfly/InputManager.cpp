@@ -22,7 +22,8 @@ bool df::InputManager::isValid(std::string event_type)
 		return true;
 	else if (event_type == JOYSTICK_EVENT)
 		return true;
-	return false;
+	else
+		return false;
 }
 
 df::InputManager & df::InputManager::getInstance()

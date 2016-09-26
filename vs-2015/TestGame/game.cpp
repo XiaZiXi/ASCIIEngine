@@ -57,13 +57,13 @@ void loadResources(void) {
 void populateWorld(void) {
 
   // Spawn some Stars.
-  /*for (int i=0; i<16; i++) 
-    new Star;*/
+  for (int i=0; i<16; i++) 
+    new Star;
  
   // Create hero.
   new Hero;
 
   // Spawn some saucers to shoot.
-  for (int i=0; i<1; i++)
+  for (int i=0; i<16; i++)
     new Saucer;
 }

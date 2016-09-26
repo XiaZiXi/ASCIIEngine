@@ -160,9 +160,8 @@ int df::Object::registerInterest(std::string event_type)
 
 int df::Object::unregisterInterest(std::string event_type)
 {
-	int i;
 	bool found = false;
-	for (i = 0; i < event_count; i++) {
+	for (int i = 0; i < event_count; i++) {
 		if (event_name[i] == event_type) {
 			found = true;
 		}
@@ -187,7 +186,6 @@ int df::Object::unregisterInterest(std::string event_type)
 	for (int j = 0; j < event_count - 1; j++) {
 		event_name[j] = event_name[j + 1];
 	}
-	event_name[event_count] = "";
 	event_count--;
 	return 0;
 }

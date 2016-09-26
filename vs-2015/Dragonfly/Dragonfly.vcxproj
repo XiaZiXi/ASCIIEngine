@@ -19,39 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Box.h" />
-    <ClInclude Include="Clock.h" />
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="EventCollision.h" />
-    <ClInclude Include="EventJoystick.h" />
-    <ClInclude Include="EventKeyboard.h" />
-    <ClInclude Include="EventMouse.h" />
-    <ClInclude Include="EventOut.h" />
-    <ClInclude Include="EventStep.h" />
-    <ClInclude Include="EventView.h" />
-    <ClInclude Include="Frame.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GraphicsManager.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Joystick.h" />
-    <ClInclude Include="JoystickList.h" />
-    <ClInclude Include="JoystickListIterator.h" />
-    <ClInclude Include="LogManager.h" />
-    <ClInclude Include="Manager.h" />
-    <ClInclude Include="Music.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="ObjectList.h" />
-    <ClInclude Include="ObjectListIterator.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="utility.h" />
-    <ClInclude Include="Vector.h" />
-    <ClInclude Include="ViewObject.h" />
-    <ClInclude Include="WorldManager.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -83,6 +50,39 @@
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="ViewObject.cpp" />
     <ClCompile Include="WorldManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="Clock.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventCollision.h" />
+    <ClInclude Include="EventJoystick.h" />
+    <ClInclude Include="EventKeyboard.h" />
+    <ClInclude Include="EventMouse.h" />
+    <ClInclude Include="EventOut.h" />
+    <ClInclude Include="EventStep.h" />
+    <ClInclude Include="EventView.h" />
+    <ClInclude Include="Frame.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GraphicsManager.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Joystick.h" />
+    <ClInclude Include="JoystickList.h" />
+    <ClInclude Include="JoystickListIterator.h" />
+    <ClInclude Include="LogManager.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="Music.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectList.h" />
+    <ClInclude Include="ObjectListIterator.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="utility.h" />
+    <ClInclude Include="Vector.h" />
+    <ClInclude Include="ViewObject.h" />
+    <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2933FFD1-9244-4D04-894D-EF64CB61AD4B}</ProjectGuid>
@@ -140,7 +140,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>..\..\..\SFML-2.4\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\..\SFML-2.4\lib;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)\Dragonfly\lib\</OutDir>
+    <OutDir>$(SolutionDir)\lib\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\..\..\SFML-2.4\include;$(IncludePath)</IncludePath>

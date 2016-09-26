@@ -14,12 +14,12 @@ namespace df {
 		bool is_started;		//True when started successfully
 
 		int event_count;				//Number of events
-		std::map <std::string, ObjectList> events;
-
+		std::string events[MAX_EVENTS];
+		ObjectList obj_list[MAX_EVENTS];
 		//Check if event is handled by this Manager
 		//If handled, return true, else false
 		//(Base Manager always returns false)
-		virtual bool isValid(std::string event_name) const;
+		virtual bool isValid(std::string event_name);
 
 	protected:
 		//Set type identifier of Manager
