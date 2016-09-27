@@ -55,7 +55,21 @@ bool UtilityTest::getWorldBoxTest()
 
 bool UtilityTest::worldToViewTest()
 {
+	Vector v(10, 10);
+	Vector wtvA = worldToView(v);
+	Vector vtwA = viewToWorld(wtvA);
+	assertEqual(v.getX(), vtwA.getX(), "worldToView()", "");
+	assertEqual(v.getY(), vtwA.getY(), "worldToView()", "");
 	return false;
+}
+
+bool UtilityTest::viewToWorldTest() {
+	Vector v(10, 10);
+	Vector vtwA = viewToWorld(v);
+	Vector wtvA = worldToView(vtwA);
+	assertEqual(v.getX(), wtvA.getX(), "viewToWorld()", "");
+	assertEqual(v.getY(), wtvA.getY(), "viewToWorld()", "");
+	return true;
 }
 
 UtilityTest::UtilityTest()
@@ -71,6 +85,7 @@ void UtilityTest::run()
 	boxIntersectsTest();
 	getWorldBoxTest();
 	worldToViewTest();
+	viewToWorldTest();
 	printResults();
 }
 

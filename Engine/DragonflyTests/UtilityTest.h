@@ -7,6 +7,7 @@ private:
 	bool boxIntersectsTest();
 	bool getWorldBoxTest();
 	bool worldToViewTest();
+	bool viewToWorldTest();
 public:
 	UtilityTest();
 	void run();

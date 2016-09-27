@@ -32,7 +32,7 @@ Hero::Hero() {
   df::Sprite *h = df::ResourceManager::getInstance().getSprite("ship");
   if (h != NULL) {
 	  setSprite(h);
-	  setSpriteSlowdown(1);
+	  setSpriteSlowdown(10);
 	  setTransparency(); //Transparent sprite
   }
   // Set starting location.
@@ -61,6 +61,10 @@ int Hero::eventHandler(const df::Event *p_e) {
     const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
     mouse(p_mouse_event);
     return 1;
+  }
+  if (p_e->getType() == df::STEP_EVENT) {
+	  setSpriteSlowdown(10);
+	  return 1;
   }
 
   // If get here, have ignored this event.
@@ -119,12 +123,14 @@ void Hero::move(int dx, int dy) {
   df::Vector new_pos(getPosition().getX() + dx, getPosition().getY() + dy);
 
   // If stays on screen, allow move.
-  if ((new_pos.getY() >= 0) && 
-        (new_pos.getY() < graphics_manager.getVertical()) &&
-		(new_pos.getX() >= 0) &&
-		(new_pos.getX() < graphics_manager.getHorizontal())
-	  )
-      world_manager.moveObject(this, new_pos);
+  if ((new_pos.getY() >= 0) &&
+	  (new_pos.getY() < graphics_manager.getVertical()) &&
+	  (new_pos.getX() >= 0) &&
+	  (new_pos.getX() < graphics_manager.getHorizontal())
+	  ) {
+	  world_manager.moveObject(this, new_pos);
+	  setSpriteSlowdown(5);
+  }
 }
 
 // Fire bullet towards target.

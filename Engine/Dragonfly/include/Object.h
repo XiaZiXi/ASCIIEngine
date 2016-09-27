@@ -23,6 +23,7 @@ namespace df {
 		Vector position;
 		Vector direction;
 		float speed;
+		bool hasGravity;
 		Solidness solidness;
 
 		Sprite *p_sprite;
