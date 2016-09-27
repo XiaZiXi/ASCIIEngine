@@ -32,7 +32,7 @@ Hero::Hero() {
   df::Sprite *h = df::ResourceManager::getInstance().getSprite("ship");
   if (h != NULL) {
 	  setSprite(h);
-	  setSpriteSlowdown(1);
+	  setSpriteSlowdown(5);
 	  setTransparency(); //Transparent sprite
   }
   // Set starting location.

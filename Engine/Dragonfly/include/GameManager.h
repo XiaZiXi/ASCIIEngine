@@ -1,5 +1,8 @@
 #pragma once
 #include "Manager.h"
+
+const std::string FRAME_TIME_TOKEN = "frame_time";
+
 namespace df {
 	//Default game loop time in ms. (33ms == 30fps)
 	const int FRAME_TIME_DEFAULT = 33;
@@ -14,6 +17,7 @@ namespace df {
 		//Target time for game loop
 		int frame_time;
 		bool isValid(std::string event_type);
+		int parseConfig();
 	public:
 		//Get instance of GameManager
 		static GameManager &getInstance();

@@ -1,6 +1,9 @@
 #if defined(_WIN32) || defined(_WIN64)
 #include <Windows.h>
 #endif
+#include <iostream>
+#include <fstream>
+
 #include "LogManager.h"
 #include "GameManager.h"
 #include "WorldManager.h"
@@ -24,6 +27,27 @@ bool df::GameManager::isValid(std::string event_type)
 	else
 		return false;
 }
+int df::GameManager::parseConfig()
+{
+	std::ifstream file(CONFIG_FILE);
+	std::string line;
+	if (file.is_open()) {
+		while (file.good()) {
+			getline(file, line);
+			if (line.substr(0, 1) == COMMENT_TOKEN)
+				continue;
+			line = line.substr(0, line.length() - 1);
+			int frames = parseLineInt(&line, FRAME_TIME_TOKEN.c_str());
+			if (frames > 0) {
+				frame_time = frames;
+				break;
+			}
+		}
+		file.close();
+		return 0;
+	}
+	return -1;
+}
 df::GameManager &df::GameManager::getInstance()
 {
 	static GameManager instance;
@@ -32,12 +56,13 @@ df::GameManager &df::GameManager::getInstance()
 
 int df::GameManager::startUp()
 {	
+	parseConfig();
 	LogManager &log_manager = LogManager::getInstance();
 	log_manager.startUp();
-	WorldManager &world_manager = WorldManager::getInstance();
-	world_manager.startUp();
 	GraphicsManager &graphics_manager = GraphicsManager::getInstance();
 	graphics_manager.startUp();
+	WorldManager &world_manager = WorldManager::getInstance();
+	world_manager.startUp();
 	InputManager &input_manager = InputManager::getInstance();
 	input_manager.startUp();
 	ResourceManager &resource_manager = ResourceManager::getInstance();
@@ -90,7 +115,7 @@ void df::GameManager::run()
 		//Swap back buffer to current buffer
 		graphics_manager.swapBuffers();
 		loop_time = clock.split();
-		intended_sleep_time = FRAME_TIME_DEFAULT - loop_time - adjust_time;
+		intended_sleep_time = frame_time - loop_time - adjust_time;
 		clock.delta();
 		if (intended_sleep_time > 0)
 			sleep(intended_sleep_time);

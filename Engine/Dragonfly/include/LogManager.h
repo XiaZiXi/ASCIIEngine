@@ -2,12 +2,14 @@
 #define __LOG_MANAGER_H__
 #include "Manager.h"
 
+const std::string LOGFILE_STRING_TOKEN = "logfile";
+
 namespace df {
 	const int LOGLEVEL_IMPORTANT = 0;
 	const int LOGLEVEL_DEFAULT = 1;
 	const int LOGLEVEL_LOW = 2;
 	//Name of the file we're writing to
-	const std::string LOGFILE_NAME = "dragonfly.log";
+	const std::string LOGFILE_NAME_DEFAULT = "dragonfly.log";
 	class LogManager : public Manager {
 	private:
 		LogManager();
@@ -15,10 +17,14 @@ namespace df {
 		void operator=(LogManager const&);
 		//Do we flush the file after writing to it
 		bool do_flush;
+		//file name
+		std::string logfile_name;
 		//Pointer to file
 		FILE *p_f;
 		//Verbosity of our log
 		int log_level;
+
+		int parseConfig();
 	public:
 		~LogManager();
 		//Get instance of Log Manager

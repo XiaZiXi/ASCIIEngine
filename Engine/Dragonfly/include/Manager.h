@@ -1,9 +1,16 @@
 #ifndef __MANAGER_H__
 #define __MANAGER_H__
 #include <stdlib.h>
+#include <iostream>
+#include <fstream>
 #include <string>
 #include "Event.h"
 #include "ObjectList.h"
+
+//Config file to look for
+const std::string CONFIG_FILE = "df-config.txt";
+//If config file starts w/ '#', skip
+const std::string COMMENT_TOKEN = "#";
 
 namespace df {
 	//Maximum # of events allowed
@@ -20,10 +27,18 @@ namespace df {
 		//If handled, return true, else false
 		//(Base Manager always returns false)
 		virtual bool isValid(std::string event_name);
+		//Parses config file for engine & game settings
+		//Returns 0 if ok, else -1
+		virtual int parseConfig();
 
 	protected:
 		//Set type identifier of Manager
 		void setType(std::string t);
+
+		void discardCR(std::string &str);
+		std::string peekLine(std::ifstream * p_file);
+		int parseLineInt(std::string *line, const char *tag);
+		std::string parseLineStr(std::string *line, const char *tag);
 	public:
 		Manager();
 		virtual ~Manager();

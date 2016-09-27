@@ -15,7 +15,7 @@ window_horizontal_pixels:1024,
 window_vertical_pixels:768,
 
 # Window dimensions in characters.
-window_horizontal_chars:80,
+window_horizontal_chars:121,
 window_vertical_chars:24,
 
 # Window background color. 
@@ -29,7 +29,7 @@ frame_time:33,
 window_style:default,
 
 # Window title.
-window_title:Dragonfly,
+window_title:Dragonfly Audio Test,
 
 # Option to show mouse cursor.
 show_mouse:false,

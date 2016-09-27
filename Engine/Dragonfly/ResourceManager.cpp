@@ -1,9 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-
 #include "ResourceManager.h"
 #include "LogManager.h"
+#include "GraphicsManager.h"
 
 using std::string;
 using std::ifstream;
@@ -263,19 +260,4 @@ df::Frame df::ResourceManager::readFrame(ifstream *p_file, int *p_line_num, cons
 	Frame frame(width, height, frame_str);
 	(*p_line_num)++;
 	return frame;
-}
-
-void discardCR(std::string &str) {
-	if (str.size() > 0 && str[str.size() - 1] == '\r')
-		str.erase(str.size() - 1);
-}
-
-//Peek next line
-std::string peekLine(std::ifstream * p_file)
-{
-	string s;
-	std::streampos sp = p_file->tellg();
-	getline(*(p_file), s);
-	p_file->seekg(sp);
-	return s;
 }

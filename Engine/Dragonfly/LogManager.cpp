@@ -7,9 +7,31 @@
 #include "utility.h"
 
 df::LogManager::LogManager() {
-	const char *file_name = LOGFILE_NAME.c_str();
-	p_f = std::fopen(file_name, "w+");
+	logfile_name = LOGFILE_NAME_DEFAULT;
 	log_level = LOGLEVEL_DEFAULT;
+}
+
+int df::LogManager::parseConfig()
+{
+	std::ifstream file(CONFIG_FILE);
+	std::string line;
+	if (file.is_open()) {
+		while (file.good()) {
+			getline(file, line);
+			if (line.substr(0, 1) == COMMENT_TOKEN)
+				continue;
+			line = line.substr(0, line.length() - 1);
+			std::string logfile = parseLineStr(&line, LOGFILE_STRING_TOKEN.c_str());
+			//TODO: check that it has a valid extension
+			if (logfile != "") {
+				logfile_name = logfile;
+				break;
+			}
+		}
+		file.close();
+		return 0;
+	}
+	return -1;
 }
 
 df::LogManager::~LogManager()
@@ -26,6 +48,9 @@ df::LogManager &df::LogManager::getInstance()
 
 int df::LogManager::startUp()
 {
+	parseConfig();
+	const char *file_name = logfile_name.c_str();
+	p_f = std::fopen(file_name, "w+");
 	int lm_success = Manager::startUp();
 	writeLog("LogManager::startUp(): Successfully started up.");
 	return lm_success;

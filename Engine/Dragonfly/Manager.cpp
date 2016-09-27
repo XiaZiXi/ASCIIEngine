@@ -1,9 +1,60 @@
+#include <iostream>
+#include <fstream>
 #include "Manager.h"
+#include "LogManager.h"
 #include "WorldManager.h"
 
 bool df::Manager::isValid(std::string event_name)
 {
 	return false;
+}
+
+int df::Manager::parseConfig()
+{
+	return 0;
+}
+
+void df::Manager::discardCR(std::string & str)
+{
+	if (str.size() > 0 && str[str.size() - 1] == '\r')
+		str.erase(str.size() - 1);
+}
+
+//Peek next line
+std::string df::Manager::peekLine(std::ifstream * p_file)
+{
+	std::string s;
+	std::streampos sp = p_file->tellg();
+	getline(*(p_file), s);
+	p_file->seekg(sp);
+	return s;
+}
+
+int df::Manager::parseLineInt(std::string * line, const char * tag)
+{
+	int s = strlen(tag);
+	if (strlen(tag) > (*line).length())
+		return -1;
+	if ((*line).compare(0, strlen(tag), tag)) {
+		return -1;
+	}
+	int number = atoi((*line).substr(strlen(tag) + 1).c_str());
+	if (number == 0) {
+		return -1;
+	}
+	return number;
+}
+
+std::string df::Manager::parseLineStr(std::string * line, const char * tag)
+{
+	int s = strlen(tag);
+	if (strlen(tag) > (*line).length())
+		return "";
+	std::string ret;
+	if ((*line).compare(0, strlen(tag), tag))
+		return "";
+	ret = (*line).substr(strlen(tag) + 1);
+	return ret;
 }
 
 void df::Manager::setType(std::string t)

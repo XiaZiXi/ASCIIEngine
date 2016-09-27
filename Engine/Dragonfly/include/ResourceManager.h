@@ -6,10 +6,6 @@
 #include "Sound.h"
 #include "Music.h"
 
-void discardCR(std::string &str);
-//Peek next line
-std::string peekLine(std::ifstream * p_file);
-
 namespace df {
 	const int MAX_SPRITES = 1000;
 	const int MAX_SOUNDS = 128;

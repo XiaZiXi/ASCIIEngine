@@ -218,7 +218,7 @@ void df::Object::draw()
 	int count = getSpriteSlowdownCount();
 	count++;
 
-	if (count >= getSpriteSlowdownCount()) {
+	if (count >= getSpriteSlowdown()) {
 		count = 0;
 		index++;
 		if (index >= p_sprite->getFrameCount())

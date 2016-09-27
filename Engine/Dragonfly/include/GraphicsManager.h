@@ -7,6 +7,17 @@
 #include "Vector.h"
 #include "Frame.h"
 
+const std::string WINDOW_HORIZONTAL_PIXELS_TOKEN = "window_horizontal_pixels";
+const std::string WINDOW_VERTICAL_PIXELS_TOKEN = "window_vertical_pixels";
+const std::string WINDOW_HORIZONTAL_CHARS_TOKEN = "window_horizontal_chars";
+const std::string WINDOW_VERTICAL_CHARS_TOKEN = "window_vertical_chars";
+const std::string WINDOW_BACKGROUND_COLOR_TOKEN = "window_background_color";
+const std::string WINDOW_STYLE_TOKEN = "window_style";
+const std::string WINDOW_TITLE_TOKEN = "window_title";
+const std::string SHOW_MOUSE_TOKEN = "show_mouse";
+const std::string HEADLESS_MODE_TOKEN = "headless";
+const std::string FONT_FILE_STRING_TOKEN = "font_file";
+
 //Helper methods
 //Compute character height
 float charHeight();
@@ -27,7 +38,7 @@ namespace df {
 
 	const int WINDOW_HORIZONTAL_PIXELS_DEFAULT = 1024;
 	const int WINDOW_VERTICAL_PIXELS_DEFAULT = 768;
-	const int WINDOW_HORIZONTAL_CHARS_DEFAULT = 121;
+	const int WINDOW_HORIZONTAL_CHARS_DEFAULT = 80;
 	const int WINDOW_VERTICAL_CHARS_DEFAULT = 24;
 	const int WINDOW_STYLE_DEFAULT = sf::Style::Default;
 	const sf::Color WINDOW_BACKGROUND_COLOR_DEFAULT = sf::Color::Black;
@@ -47,7 +58,14 @@ namespace df {
 		int window_vertical_pixels;
 		int window_horizontal_chars;
 		int window_vertical_chars;
+		int window_style;
+		std::string window_title;
+		std::string font_file_label;
+		bool isHeadless;
+		bool showMouse;
 		sf::Color window_background_color;
+
+		int parseConfig();
 
 	public:
 		static GraphicsManager &getInstance();

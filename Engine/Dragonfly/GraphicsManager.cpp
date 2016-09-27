@@ -1,4 +1,3 @@
-#include <iostream>
 #include "LogManager.h"
 #include "GraphicsManager.h"
 #include "utility.h"
@@ -10,6 +9,73 @@ df::GraphicsManager::GraphicsManager() {
 	window_horizontal_chars = WINDOW_HORIZONTAL_CHARS_DEFAULT;
 	window_vertical_chars = WINDOW_VERTICAL_CHARS_DEFAULT;
 	window_background_color = WINDOW_BACKGROUND_COLOR_DEFAULT;
+	window_style = WINDOW_STYLE_DEFAULT;
+	window_title = WINDOW_TITLE_DEFAULT;
+	isHeadless = false;
+	showMouse = false;
+	font_file_label = FONT_FILE_DEFAULT;
+}
+
+int df::GraphicsManager::parseConfig()
+{
+	std::ifstream file(CONFIG_FILE);
+	std::string line;
+	if (file.is_open()) {
+		while (file.good()) {
+			getline(file, line);
+			if (line.substr(0, 1) == COMMENT_TOKEN)
+				continue;
+			line = line.substr(0, line.length() - 1);
+			int horizontal_chars = parseLineInt(&line, WINDOW_HORIZONTAL_CHARS_TOKEN.c_str());
+			if (horizontal_chars != -1)
+				window_horizontal_chars = horizontal_chars;
+			int vertical_chars = parseLineInt(&line, WINDOW_VERTICAL_CHARS_TOKEN.c_str());
+			if (vertical_chars != -1)
+				window_vertical_chars = vertical_chars;
+			int horizontal_pixels = parseLineInt(&line, WINDOW_HORIZONTAL_PIXELS_TOKEN.c_str());
+			if (horizontal_pixels != -1)
+				window_horizontal_pixels = horizontal_pixels;
+			int vertical_pixels = parseLineInt(&line, WINDOW_VERTICAL_PIXELS_TOKEN.c_str());
+			if (vertical_pixels != -1)
+				window_vertical_pixels = vertical_pixels;
+			std::string background_color = parseLineStr(&line, WINDOW_BACKGROUND_COLOR_TOKEN.c_str());
+			if (background_color != "") {
+				Color c;
+				if (background_color == "red") c = Color::RED;
+				else if (background_color == "yellow") c = Color::YELLOW;
+				else if (background_color == "magenta") c = Color::MAGENTA;
+				else if (background_color == "green") c = Color::GREEN;
+				else if (background_color == "cyan") c = Color::CYAN;
+				else if (background_color == "black") c = Color::BLACK;
+				else if (background_color == "blue") c = Color::BLUE;
+				else if (background_color == "white") c = Color::WHITE;
+				else c = COLOR_DEFAULT;
+				setBackgroundColor(c);
+			}
+			std::string style = parseLineStr(&line, WINDOW_STYLE_TOKEN.c_str());
+			if (style != "") {
+				if (style == "default")
+					window_style = sf::Style::Default;
+				else if (style == "fullscreen")
+					window_style = sf::Style::Fullscreen;
+			}
+			std::string title = parseLineStr(&line, WINDOW_TITLE_TOKEN.c_str());
+			if (title != "") 
+				window_title = title;
+			std::string show_mouse = parseLineStr(&line, SHOW_MOUSE_TOKEN.c_str());
+			if (show_mouse != "") 
+				showMouse = (show_mouse == "true") ? true : false;
+			std::string headless_mode = parseLineStr(&line, HEADLESS_MODE_TOKEN.c_str());
+			if (headless_mode != "") 
+				isHeadless = (headless_mode == "true") ? true : false;
+			std::string font_file = parseLineStr(&line, FONT_FILE_STRING_TOKEN.c_str());
+			if (font_file != "")
+				font_file_label = font_file;
+		}
+		file.close();
+		return 0;
+	}
+	return -1;
 }
 
 df::GraphicsManager & df::GraphicsManager::getInstance()
@@ -20,25 +86,27 @@ df::GraphicsManager & df::GraphicsManager::getInstance()
 
 int df::GraphicsManager::startUp()
 {
+	parseConfig();
 	LogManager &lm = LogManager::getInstance();
 	//if window is already created, do nothing
-	if (p_window != NULL) {
+	//or if the setting is set to headless
+	if (p_window != NULL || isHeadless) {
 		return 0;
 	}
 
 	p_window = new sf::RenderWindow(sf::VideoMode(window_horizontal_pixels, window_vertical_pixels), 
-		WINDOW_TITLE_DEFAULT,
-		WINDOW_STYLE_DEFAULT);
+		window_title,
+		window_style);
 
 	if (!p_window) {
 		std::cout << "Error! Unable to allocate RenderWindow." << std::endl;
 		return -1;
 	}
 
-	p_window->setMouseCursorVisible(false);
+	p_window->setMouseCursorVisible(showMouse);
 	p_window->setVerticalSyncEnabled(true);
 
-	if (font.loadFromFile(FONT_FILE_DEFAULT) == false) {
+	if (font.loadFromFile(font_file_label) == false) {
 		std::cout << "Failed to load 'df-font.ttf'." << std::endl;
 		return -1;
 	}
@@ -226,6 +294,7 @@ bool df::GraphicsManager::setBackgroundColor(Color new_color)
 		break;
 	default:
 		//invalid color
+		color = WINDOW_BACKGROUND_COLOR_DEFAULT;
 		return false;
 	}
 	window_background_color = color;
@@ -237,7 +306,7 @@ int df::GraphicsManager::swapBuffers()
 	if (p_window == NULL)
 		return -1;
 	p_window->display();
-	p_window->clear();
+	p_window->clear(window_background_color);
 	return 0;
 }
 
