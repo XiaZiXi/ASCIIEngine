@@ -167,6 +167,9 @@ df::ObjectList df::WorldManager::isCollision(const Object * p_o, Vector where)
 
 int df::WorldManager::changeAltitude(int old_alt, int new_alt, Object * p_o)
 {
+	//only change this if the altitude is within range
+	if (new_alt < 0 || new_alt > MAX_ALTITUDE - 1)
+		return -1;
 	altitudes[old_alt].remove(p_o);
 	return altitudes[new_alt].insert(p_o);
 }
