@@ -1,10 +1,10 @@
-Dragonfly Spawn
+Dragonfly 2c
 Kelly Zhang (kezhang)
 
 Engine Code & Game Code written and tested in Visual Studio 2015. 
 NOT TESTED ON LINUX. make WITH CAUTION.
 
-Engine contains the basic functionality expected in this iteration, along with basic Joystick support.
+Engine contains the basic functionality (and some more) expected in this iteration.
 
 TestGame contains the Dragonfly Naiad version of Saucer Shoot.
 
@@ -16,8 +16,10 @@ DragonflyTests contains (sparse) unit testing for individual classes in the libr
     - Run DragonflyTests.exe in Debug/
     - Test output should appear in dragonfly.log
 
-BUGS:
-- Frame animation slowdown not working correctly
+EXTRA ADDITIONAL FEATURES:
+- df-config.txt parsing support
+- Event registration. Objects now can registerEvent() and have the respective managers keep track of objects with those events
+- Joystick support. Very barebones. Dragonfly just wraps around the existing SFML functionality & support. (TODO: Thouroughly test this)
 
 --------------------------------------------------------------------
 
@@ -56,6 +58,7 @@ Engine/Dragonfly/include/ - contains Dragonfly header files
 
 ##Projects that use Dragonfly library##
 TestGame/
+saucer-shoot/
 Engine/CollisionTest/
 Engine/DragonflyTests/
 Engine/AudioTest/
