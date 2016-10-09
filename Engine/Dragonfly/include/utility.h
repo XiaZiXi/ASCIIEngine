@@ -8,6 +8,7 @@ char *getTimeStamp();
 //Sleep for milliseconds
 void sleep(long int ms);
 bool positionsIntersect(df::Vector p1, df::Vector p2);
+bool pointIntersectsBox(df::Vector point, df::Box box);
 bool boxIntersectsBox(df::Box A, df::Box B);
 df::Box getWorldBox(const df::Object *p_o);
 df::Box getWorldBox(const df::Object *p_o, df::Vector pos);

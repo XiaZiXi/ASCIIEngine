@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Event.cpp" />
@@ -53,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Box.h" />
+    <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\Clock.h" />
     <ClInclude Include="include\Color.h" />
     <ClInclude Include="include\Event.h" />

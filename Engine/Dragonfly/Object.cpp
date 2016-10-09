@@ -34,11 +34,8 @@ df::Object::Object(){
 }
 
 df::Object::~Object(){
-	for (int i = 0; i < event_count; i++)
-		unregisterInterest(event_name[i]);
-	if (p_sprite != NULL) {
-		ResourceManager::getInstance().unloadSprite(p_sprite->getLabel());
-	}
+	while(event_count > 0)
+		unregisterInterest(event_name[0]);
 	WorldManager::getInstance().removeObject(this);
 }
 
@@ -165,9 +162,11 @@ int df::Object::registerInterest(std::string event_type)
 int df::Object::unregisterInterest(std::string event_type)
 {
 	bool found = false;
+	int idx = -1;
 	for (int i = 0; i < event_count; i++) {
 		if (event_name[i] == event_type) {
 			found = true;
+			idx = i;
 		}
 	}
 	if (!found)
@@ -187,10 +186,9 @@ int df::Object::unregisterInterest(std::string event_type)
 		InputManager::getInstance().unregisterInterest(this, event_type);
 	else
 		WorldManager::getInstance().unregisterInterest(this, event_type);
-	for (int j = 0; j < event_count - 1; j++) {
+	for (int j = idx; j < event_count - 1; j++) {
 		event_name[j] = event_name[j + 1];
 	}
-	event_name[event_count] = "";
 	event_count--;
 	return 0;
 }

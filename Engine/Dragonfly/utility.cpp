@@ -104,3 +104,10 @@ std::string toString(int i) {
 	ss << i;
 	return ss.str();
 }
+
+bool pointIntersectsBox(df::Vector point, df::Box box)
+{
+	bool x = (point.getX() >= box.getCorner().getX()) && (point.getX() <= box.getCorner().getX() + box.getHorizontal());
+	bool y = (point.getY() >= box.getCorner().getY()) && (point.getY() <= box.getCorner().getY() + box.getVertical());
+	return (x && y);
+}

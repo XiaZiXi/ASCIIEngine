@@ -59,7 +59,8 @@ void df::WorldManager::shutDown()
 {
 	ObjectListIterator li(&updates);
 	for (li.first(); !li.isDone(); li.next()) {
-		//delete li.currentObject();
+		df::Object *p = li.currentObject();
+		delete p;
 	}
 	Manager::shutDown();
 }
@@ -73,13 +74,13 @@ int df::WorldManager::insertObject(Object * p_o)
 
 int df::WorldManager::removeObject(Object * p_o)
 {
-	if (p_o == NULL)
-		return -1;
 	ObjectList ol = (updates);
 	ObjectListIterator li(&ol);
 	for (li.first(); !li.isDone(); li.next()) {
 		if (li.currentObject() == p_o) {
-			markForDelete(p_o);
+			Object *p = li.currentObject();
+			updates.remove(p);
+			altitudes[p->getAltitude()].remove(p);
 			return 0;
 		}
 	}
@@ -168,7 +169,7 @@ df::ObjectList df::WorldManager::isCollision(const Object * p_o, Vector where)
 int df::WorldManager::changeAltitude(int old_alt, int new_alt, Object * p_o)
 {
 	//only change this if the altitude is within range
-	if (new_alt < 0 || new_alt > MAX_ALTITUDE - 1)
+	if (!(new_alt >= 0 && new_alt <= MAX_ALTITUDE))
 		return -1;
 	altitudes[old_alt].remove(p_o);
 	return altitudes[new_alt].insert(p_o);
@@ -264,11 +265,8 @@ void df::WorldManager::update()
 
 	//Delete objects in deletions
 	ObjectListIterator li(&deletions);
-	li.first();
 	while (!li.isDone()) {
-		if (li.currentObject() != NULL) {
-			delete li.currentObject();
-		}
+		delete li.currentObject();
 		li.next();
 	}
 	//clear deletions list
@@ -295,16 +293,11 @@ int df::WorldManager::markForDelete(Object * p_o)
 {
 	//Object might be already marked so only add it once
 	ObjectListIterator li(&deletions);
-	li.first();
 	while (!li.isDone()) {
 		if (li.currentObject() == p_o)
 			return 0;
 		li.next();
 	}
-	//don't update this object anymore
-	updates.remove(p_o);
-	//don't draw this object anymore
-	altitudes[p_o->getAltitude()].remove(p_o);
 	//add to deletion list
 	return deletions.insert(p_o);
 }

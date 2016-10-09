@@ -122,12 +122,7 @@ void df::GraphicsManager::shutDown()
 	sf::Event event;
 	if (p_window == NULL)
 		return;
-	while (p_window->pollEvent(event))
-	{
-		if (event.type == sf::Event::Closed)
-			p_window->close();
-		delete p_window;
-	}
+	delete p_window;
 }
 
 int df::GraphicsManager::drawCh(Vector world_pos, char ch, Color color) const

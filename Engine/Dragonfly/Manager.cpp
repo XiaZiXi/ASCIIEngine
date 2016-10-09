@@ -140,9 +140,9 @@ int df::Manager::unregisterInterest(Object * p_o, std::string event_type)
 		return -1;
 	//Is list now empty?
 	if (obj_list[idx].isEmpty()) {
-		for (int i = 0; i < event_count - 1; i++)
+		for (int i = idx; i < event_count - 1; i++)
 			obj_list[i] = obj_list[i + 1];
-		for (int j = 0; j < event_count - 1; j++)
+		for (int j = idx; j < event_count - 1; j++)
 			events[j] = events[j + 1];
 		events[event_count] = "";
 		obj_list[event_count].clear();

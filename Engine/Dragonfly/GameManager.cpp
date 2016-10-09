@@ -83,6 +83,7 @@ void df::GameManager::shutDown()
 #endif
 	ResourceManager::getInstance().shutDown();
 	InputManager::getInstance().shutDown();
+	GraphicsManager::getInstance().shutDown();
 	//Remove all objects
 	WorldManager::getInstance().shutDown();
 	//Shut down log manager
